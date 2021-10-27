@@ -1,24 +1,75 @@
-import java.awt.Canvas;
+import java.awt.*;
+import java.awt.image.BufferStrategy;
+
 public class Game extends Canvas implements Runnable {
 
-    public static final String gameTitle= "Tilted Tower";
-    public static final int width=1920,height=640;
-    public static int playerLives=3;
-
-    @Override
-    public void run() {
-    }
+    private static final String gameTitle= "Tilted Tower";
+    private static final int width=1920,height=1080;
+    private static int playerLives=3;
+    private boolean running;
 
     public Game(){
         new Window(width,height,gameTitle,this);
     }
 
-    public void start(){
-
-    }
-
     public static void main(String[] args){
         new Game();
     }
+
+    @Override
+    public void run() {
+        long lastTime = System.nanoTime();
+        double amountOfTicks = 60.0;
+        double ns = 1000000000/amountOfTicks;
+        double delta = 0;
+        long timer = System.currentTimeMillis();
+        int frames = 0;
+
+        while(running){
+            long now = System.nanoTime();
+            delta += (now-lastTime)/ns;
+            lastTime=now;
+
+            while(delta>=1) {
+            tick();
+            delta--;
+            }
+            if(running){
+                render();
+            }
+            frames++;
+
+            if(System.currentTimeMillis() - timer > 1000){
+                timer += 1000;
+                System.out.println("FPS: "+frames);
+            }
+        }
+        stop();
+    }
+
+
+
+    public void start(){
+    }
+    public void tick(){
+    }
+    public void render(){
+        BufferStrategy buffStrat = this.getBufferStrategy();
+        if (buffStrat == null){
+            this.createBufferStrategy(3);
+            return;
+        }
+
+        Graphics g = buffStrat.getDrawGraphics();
+
+        g.setColor(Color.blue);
+        g.fillRect(640,0,640,1080);
+
+        g.dispose();;
+        buffStrat.show();
+    }
+    public void stop(){
+    }
+
 
 }
