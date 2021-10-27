@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/PCSS Miniproject.iml" filepath="$PROJECT_DIR$/PCSS Miniproject.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Client.iml" filepath="$PROJECT_DIR$/Client.iml" />
     </modules>
   </component>
 </project>
