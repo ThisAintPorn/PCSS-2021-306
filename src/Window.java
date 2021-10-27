@@ -4,7 +4,7 @@ import java.awt.*;
 
 public class Window extends Canvas {
 
-    private final Game game;
+    private Game game;
 
     public Window(int width, int height, String title, Game game) {
 
