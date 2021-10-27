@@ -14,7 +14,11 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void start(){
-        
+
+    }
+
+    public static void main(String[] args){
+        new Game();
     }
 
 }
