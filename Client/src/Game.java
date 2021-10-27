@@ -3,10 +3,11 @@ import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
 
-    private static final String gameTitle= "Tilted Tower";
+    private static final String gameTitle= "Tilted Towers";
     private static final int width=1920,height=1080;
     private static int playerLives=3;
     private boolean running;
+    private Thread thread;
 
     public Game(){
         new Window(width,height,gameTitle,this);
@@ -47,12 +48,15 @@ public class Game extends Canvas implements Runnable {
         stop();
     }
 
-
-
     public void start(){
+        thread = new Thread(this);
+        thread.start();
+        running =true;
     }
+
     public void tick(){
     }
+
     public void render(){
         BufferStrategy buffStrat = this.getBufferStrategy();
         if (buffStrat == null){
@@ -69,7 +73,11 @@ public class Game extends Canvas implements Runnable {
         buffStrat.show();
     }
     public void stop(){
+        try{
+            thread.join();
+            running = false;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
-
-
 }
