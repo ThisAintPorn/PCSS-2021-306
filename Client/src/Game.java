@@ -6,6 +6,7 @@ public class Game extends Canvas implements Runnable {
     private static final String gameTitle= "Tilted Towers";
     private static final int width=1920,height=1080;
     private static int playerLives=3;
+
     private boolean running;
     private Thread thread;
 
