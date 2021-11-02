@@ -23,10 +23,8 @@ public class Game extends Canvas implements Runnable {
 
 
     public static void main(String[] args){
-        swingBlock= new Block();
-        System.out.println("block posX: "+swingBlock.getPosX()+", posY: "+ swingBlock.getPosY());
-        //swingBlock.swing();
-        new Game();
+        Game game = new Game();
+                game.initialize();
 
 
     }
@@ -37,14 +35,16 @@ public class Game extends Canvas implements Runnable {
         int frames = 0;
 
         while(running){
-
+            /*
             while(delta>=1) {
             tick();
             delta--;
-            }
+            }*/
             if(running){
                 render();
+                swingBlock.swing();
             }
+            delta++;
             frames++;
 
             if(System.nanoTime() > lastFPSCheck + 1000000000 ){
@@ -52,9 +52,16 @@ public class Game extends Canvas implements Runnable {
                 long currentFPS = frames;
                 frames=0;
                 System.out.println("FPS: "+currentFPS);
+                System.out.println("block posX: "+swingBlock.getPosX()+", posY: "+ swingBlock.getPosY());
+                System.out.println("block posX: "+swingBlock.getPosX());
             }
         }
         stop();
+    }
+
+    public void initialize(){
+        swingBlock= new Block();
+        this.start();
     }
 
     public void start(){
@@ -76,7 +83,8 @@ public class Game extends Canvas implements Runnable {
         }
 
         g = bs.getDrawGraphics();
-
+        //Clear
+        g.clearRect(0,0,width,height);
         //Draw here
         g.setColor(Color.white);
         g.fillRect(0,0,1920,1080);
