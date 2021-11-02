@@ -1,6 +1,6 @@
 public class Block {
     //Image img = 'block.png'
-    private int posX,posY, blockSpawnX=960,blockSpawnY=0,bottomY=110,
+    private int posX,posY, blockSpawnX=960,blockSpawnY=0,bottomBoundY=110,
             leftOpponentBound= 640, rightOpponentBound = 1280;
     private double fallAcceleration = 1.0982;
     private boolean falling = false,swingLeft;
@@ -17,7 +17,7 @@ public class Block {
     }
 
     public void fall(){
-        if(posY>bottomY) {
+        if(posY>bottomBoundY) {
             posY = (int) (fallAcceleration * posY);
         }
     }

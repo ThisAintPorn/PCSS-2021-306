@@ -43,16 +43,18 @@ public class Game extends Canvas implements Runnable {
 
             if(System.currentTimeMillis() - timer > 1000){
                 timer += 1000;
-                System.out.println("FPS: "+frames);
+                System.out.println("FPS: "+frames/now);
             }
         }
         stop();
     }
 
     public void start(){
-        thread = new Thread(this);
-        thread.start();
-        running =true;
+        if(!running) {
+            thread = new Thread(this);
+            thread.start();
+            running = true;
+        }
     }
 
     public void tick(){
