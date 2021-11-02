@@ -1,14 +1,18 @@
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.util.ArrayList;
 
 public class Game extends Canvas implements Runnable {
 
     private static final String gameTitle= "Tilted Towers";
     private static final int width=1920,height=1080;
     private static int playerLives=3;
+    private static ArrayList<Block> stackedBlocks;
+    private static Block swingBlock;
 
     private boolean running;
     private Thread thread;
+    private static long lastFPSCheck=0;
 
     public Game(){
         new Window(width,height,gameTitle,this);
@@ -20,17 +24,10 @@ public class Game extends Canvas implements Runnable {
 
     @Override
     public void run() {
-        long lastTime = System.nanoTime();
-        double amountOfTicks = 60.0;
-        double ns = 1000000000/amountOfTicks;
         double delta = 0;
-        long timer = System.currentTimeMillis();
         int frames = 0;
 
         while(running){
-            long now = System.nanoTime();
-            delta += (now-lastTime)/ns;
-            lastTime=now;
 
             while(delta>=1) {
             tick();
@@ -41,9 +38,11 @@ public class Game extends Canvas implements Runnable {
             }
             frames++;
 
-            if(System.currentTimeMillis() - timer > 1000){
-                timer += 1000;
-                System.out.println("FPS: "+frames/now);
+            if(System.nanoTime() > lastFPSCheck + 1000000000 ){
+                lastFPSCheck =System.nanoTime();
+                long currentFPS = frames;
+                frames=0;
+                System.out.println("FPS: "+currentFPS);
             }
         }
         stop();
@@ -69,11 +68,14 @@ public class Game extends Canvas implements Runnable {
 
         Graphics g = buffStrat.getDrawGraphics();
 
+        //Draw here
         g.setColor(Color.blue);
         g.fillRect(640,0,640,1080);
 
-        g.dispose();;
+
         buffStrat.show();
+        g.dispose();;
+
     }
     public void stop(){
         try{
@@ -82,5 +84,9 @@ public class Game extends Canvas implements Runnable {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public static void setSwingBlock(Block b){
+       swingBlock = b;
     }
 }
