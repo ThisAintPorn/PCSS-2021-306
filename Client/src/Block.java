@@ -5,8 +5,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class Block {
-    BufferedImage blockImg;
-    private int posX,posY, blockSpawnX=960,blockSpawnY=0,bottomBoundY=110,
+    private BufferedImage blockImg;
+    private int posX, posY, blockSpawnX=960,blockSpawnY=0,bottomBoundY=110,
             leftOpponentBound= 640, rightOpponentBound = 1280;
     private double fallAcceleration = 1.0982;
     private boolean falling, swinging,swingLeft;
@@ -14,19 +14,13 @@ public class Block {
 
 
     public Block(){
-        posX = blockSpawnX;
-        posX = blockSpawnY;
+        this.posX = blockSpawnX;
+        this.posX = blockSpawnY;
         try {
             blockImg = ImageIO.read(new File("res/midtower.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Game.setSwingBlock(this);
-    }
-
-    public Block(int x, int y){
-        posX =x;
-        posY =y;
     }
 
     public void fall(){
@@ -52,10 +46,10 @@ public class Block {
     public BufferedImage getBlockImg(){
         return this.blockImg;
     }
-    public int getBlockX(){
+    public int getPosX(){
         return this.posX;
     }
-    public int getBlockY(){
+    public int getPosY(){
         return this.posY;
     }
 

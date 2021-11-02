@@ -24,7 +24,10 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args){
         swingBlock= new Block();
+        System.out.println("block posX: "+swingBlock.getPosX()+", posY: "+ swingBlock.getPosY());
+        //swingBlock.swing();
         new Game();
+
 
     }
 
@@ -81,7 +84,7 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.blue);
         g.fillRect(640,0,640,1080);
 
-        g.drawImage(swingBlock.getBlockImg(), swingBlock.getBlockX(), swingBlock.getBlockY(),null);
+        g.drawImage(swingBlock.getBlockImg(), swingBlock.getPosX(), swingBlock.getPosY(),null);
 
 
         bs.show();
