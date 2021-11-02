@@ -14,6 +14,9 @@ public class Server {
 			//Socket connectToClient = serverSocket.accept();
 			//Create new thread for each accepted client
 			
+			Player p1 = new Player("player1");
+			Player p2 = new Player("player2");
+			Player p3 = new Player("player3");
 			
 			while (true) {
 				//Example on how to handle a player class' (player) dataoutput stream (dop), with the player's position variable
