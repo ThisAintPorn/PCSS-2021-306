@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Game extends Canvas implements Runnable {
@@ -12,14 +13,19 @@ public class Game extends Canvas implements Runnable {
 
     private boolean running;
     private Thread thread;
+    private BufferStrategy bs;
+    private Graphics g;
     private static long lastFPSCheck=0;
 
     public Game(){
         new Window(width,height,gameTitle,this);
     }
 
+
     public static void main(String[] args){
+        swingBlock= new Block();
         new Game();
+
     }
 
     @Override
@@ -60,20 +66,25 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void render(){
-        BufferStrategy buffStrat = this.getBufferStrategy();
-        if (buffStrat == null){
+        bs = this.getBufferStrategy();
+        if (bs == null){
             this.createBufferStrategy(3);
             return;
         }
 
-        Graphics g = buffStrat.getDrawGraphics();
+        g = bs.getDrawGraphics();
 
         //Draw here
+        g.setColor(Color.white);
+        g.fillRect(0,0,1920,1080);
+
         g.setColor(Color.blue);
         g.fillRect(640,0,640,1080);
 
+        g.drawImage(swingBlock.getBlockImg(), swingBlock.getBlockX(), swingBlock.getBlockY(),null);
 
-        buffStrat.show();
+
+        bs.show();
         g.dispose();;
 
     }
