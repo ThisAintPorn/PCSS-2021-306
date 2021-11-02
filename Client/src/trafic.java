@@ -30,7 +30,7 @@ public class trafic {
 			dop.flush();
 			//Receive crookedness from server? Maybe not?
 			
-			//Get player ID and position player on screen depending on their player ID
+			//Get player ID and position the player on screen depending on their player ID
 			int playerid = dip.readInt();
 			//
 			//
@@ -38,6 +38,7 @@ public class trafic {
 			int score = dip.readInt();
 			int lives = dip.readInt();
 			
+			//If the lives run out, gameover method executes?
 			if (lives <= 0){
 					gameover();
 			}
