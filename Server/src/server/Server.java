@@ -1,33 +1,56 @@
 package server;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Date;
 
 public class Server {
-	public static void main(String[] args) {
-		int port = 2345;
-		
-		try {
-			ServerSocket serverSocket = new ServerSocket(port);
-			//How to accept connection from one client
-			//Socket connectToClient = serverSocket.accept();
-			//Create new thread for each accepted client
-			
-			Player p1 = new Player("player1");
-			Player p2 = new Player("player2");
-			Player p3 = new Player("player3");
-			
-			while (true) {
-				//Example on how to handle a player class' object's (p1) dataoutput stream (dop), with the player's position variable
-				p1.dop.readInt(p1.position);
-			}
-			
-		}
-		catch (IOException ex) {
-			System.out.println(ex.toString() + '\n');
-		}
-	}
-	
-	
+	static int port = 5432;
+    double rate, amount;
+    int years,clients;
+
+    public static void main(String[] args) {
+        // TODO Auto-generated method stub
+
+        new Thread(() -> {
+            try {
+
+                ServerSocket server = new ServerSocket(port);
+                System.out.println("Server started at: " + new Date());
+
+                int clients = 0;
+
+                while (true) {
+
+
+                    Socket clientSocket = server.accept();
+                    clients++;
+                    System.out.println("Connection to client at: " + new Date());
+
+
+                    System.out.println("Processing client "+clients+" at "+new Date());
+
+
+                    InetAddress inetAddress = clientSocket.getInetAddress();
+                    System.out.println("Client "+clients+" has name: "+ inetAddress.getHostName()+" and address: "+inetAddress.getHostAddress());
+
+                    //New thread is made with a Player constructor, that passes client socket and server name on
+                    new Thread(new Player(clientSocket, "multi server")).start();
+
+
+
+                }
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("Lost connection to server socket");
+            } catch (Exception e) {
+                e.printStackTrace();
+                System.out.println("something went wrong");
+            }
+
+        }).start();
+    }
 }
