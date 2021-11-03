@@ -1,12 +1,11 @@
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class Block {
     private BufferedImage blockImg;
-    private int posX, posY, blockSpawnX=960,blockSpawnY=0,bottomBoundY=110,
+    private int posX, posY, blockSpawnX=747,blockSpawnY=0,bottomBoundY=512,
             leftOpponentBound= 640, rightOpponentBound = 1067; //1280-213
     private double fallAcceleration = 1.0982;
     private boolean falling, swinging,swingLeft;
@@ -14,8 +13,9 @@ public class Block {
 
 
     public Block(){
-        this.posX = 960; //blockSpawnX;
-        this.posX = 0;//blockSpawnY;
+        this.posX = blockSpawnX;
+        this.posY = blockSpawnY;
+        this.swinging=true;
         try {
             blockImg = ImageIO.read(new File("res/midtower.png"));
         } catch (IOException e) {
@@ -24,10 +24,9 @@ public class Block {
     }
 
     public void fall(){
-        swinging=false;
         if(falling) {
             if (posY < bottomBoundY) {
-                posY = (int) (fallAcceleration * posY);
+                posY ++;
             }
             else {
                 falling=false;
@@ -36,7 +35,6 @@ public class Block {
     }
 
     public void swing(){
-        swinging=true;
         if(swinging) {
             if(posX<rightOpponentBound && !swingLeft){
                 posX++;
@@ -53,6 +51,18 @@ public class Block {
         }
     }
 
+    public void setSwinging(boolean b){
+        this.swinging=b;
+    }
+    public boolean isSwinging(){
+        return swinging;
+    }
+    public void setfalling(boolean b){
+        this.falling=b;
+    }
+    public boolean isFalling(){
+        return falling;
+    }
     public BufferedImage getBlockImg(){
         return this.blockImg;
     }

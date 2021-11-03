@@ -1,7 +1,14 @@
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game extends Canvas implements Runnable {
 
@@ -10,12 +17,15 @@ public class Game extends Canvas implements Runnable {
     private static int playerLives=3;
     private static ArrayList<Block> stackedBlocks;
     private static Block swingBlock;
+    private static BufferedImage background;
 
     private boolean running;
     private Thread thread;
     private BufferStrategy bs;
     private Graphics g;
     private static long lastFPSCheck=0;
+
+    private KeyManager keyManager;
 
     public Game(){
         new Window(width,height,gameTitle,this);
@@ -27,41 +37,46 @@ public class Game extends Canvas implements Runnable {
                 game.initialize();
 
 
+
     }
 
     @Override
     public void run() {
-        double delta = 0;
         int frames = 0;
 
         while(running){
-            /*
-            while(delta>=1) {
+
             tick();
-            delta--;
-            }*/
-            if(running){
-                render();
-                swingBlock.swing();
-            }
-            delta++;
+            render();
+
             frames++;
 
+
+                //FPS counter
             if(System.nanoTime() > lastFPSCheck + 1000000000 ){
                 lastFPSCheck =System.nanoTime();
                 long currentFPS = frames;
                 frames=0;
                 System.out.println("FPS: "+currentFPS);
                 System.out.println("block posX: "+swingBlock.getPosX()+", posY: "+ swingBlock.getPosY());
-                System.out.println("block posX: "+swingBlock.getPosX());
             }
         }
         stop();
     }
 
     public void initialize(){
+        //put image and sound loading here
+        try {
+            background = ImageIO.read(new File("res/gameBond.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        keyManager =new KeyManager();
+        keyManager.setGame(this);
+        this.addKeyListener(keyManager);
         swingBlock= new Block();
         this.start();
+        this.requestFocusInWindow();
     }
 
     public void start(){
@@ -73,6 +88,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void tick(){
+        swingBlock.swing();
+        swingBlock.fall();
+
     }
 
     public void render(){
@@ -89,8 +107,7 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.white);
         g.fillRect(0,0,1920,1080);
 
-        g.setColor(Color.blue);
-        g.fillRect(640,0,640,1080);
+        g.drawImage(background,640,-3240,null);
 
         g.drawImage(swingBlock.getBlockImg(), swingBlock.getPosX(), swingBlock.getPosY(),null);
 
@@ -108,7 +125,11 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
-    public static void setSwingBlock(Block b){
-       swingBlock = b;
+    public static Block getSwingBlock() {
+        return swingBlock;
+    }
+
+    public KeyManager getKeyManager() {
+        return keyManager;
     }
 }
