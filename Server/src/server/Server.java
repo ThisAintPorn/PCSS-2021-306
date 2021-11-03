@@ -19,8 +19,8 @@ public class Server {
 			Player p3 = new Player("player3");
 			
 			while (true) {
-				//Example on how to handle a player class' (player) dataoutput stream (dop), with the player's position variable
-				player.dop.readInt(player.position);
+				//Example on how to handle a player class' object's (p1) dataoutput stream (dop), with the player's position variable
+				p1.dop.readInt(p1.position);
 			}
 			
 		}
