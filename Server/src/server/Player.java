@@ -12,6 +12,7 @@ public class Player implements Runnable {
     int playerid;
     int score;
     int playerLives;
+    int blockPosition;
 
     public Player(Socket s, String n) {
         this.clientSocket = s;
@@ -33,6 +34,9 @@ public class Player implements Runnable {
 
             while (connected) {
             	//Stuff that is calculated for the player happens here
+            	//Receive information about where the block landed from client
+            	blockPosition = dip.readInt();
+            	//Calculate crookedness of the tower? Maybe?
             	//
             	//Calculate score after block fell down
             	//

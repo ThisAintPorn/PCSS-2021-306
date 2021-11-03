@@ -7,7 +7,7 @@ import java.net.Socket;
 import java.util.Date;
 
 public class Server {
-	static int port = 5432;
+	static int port = 2345;
     double rate, amount;
     int years,clients;
 

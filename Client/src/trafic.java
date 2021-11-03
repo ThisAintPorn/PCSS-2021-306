@@ -8,7 +8,7 @@ public class trafic {
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
 		boolean connect = true;
-		int position = 50;
+		int blockPosition;
 		System.out.println("Enter ip address in quotation marks, for example \"192.168.1.1\" ");
 		String ipAddress = input.next();
 		System.out.println("The ip address is " + ipAddress);
@@ -26,7 +26,7 @@ public class trafic {
 
 			while (connect) {
 			//Send position of the next block to the server
-			dop.writeInt(position);
+			dop.writeInt(blockPosition);
 			dop.flush();
 			//Receive crookedness from server? Maybe not?
 			
