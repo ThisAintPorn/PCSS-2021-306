@@ -37,12 +37,11 @@ public class Server {
                     System.out.println("Client "+clients+" has name: "+ inetAddress.getHostName()+" and address: "+inetAddress.getHostAddress());
 
                     //New thread is made with a Player constructor, that passes client socket and server name on
-                    new Thread(new Player(clientSocket, "multi server")).start();
-
-
-
+                    if (clients <= 3){
+                    	new Thread(new Player(clientSocket, "multi server")).start();
+                    }
+                    
                 }
-
             } catch (IOException e) {
                 e.printStackTrace();
                 System.out.println("Lost connection to server socket");
