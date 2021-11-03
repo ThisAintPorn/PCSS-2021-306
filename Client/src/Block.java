@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class Block {
     private BufferedImage blockImg;
-    private int posX, posY, blockSpawnX=747,blockSpawnY=0,bottomBoundY=600,
+    private int posX, posY, blockSpawnX=747,blockSpawnY=0,bottomBoundY=512,
             leftOpponentBound= 640, rightOpponentBound = 1067; //1280-213
     private double fallAcceleration = 1.0982;
     private boolean falling, swinging,swingLeft;

@@ -1,9 +1,12 @@
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,6 +17,7 @@ public class Game extends Canvas implements Runnable {
     private static int playerLives=3;
     private static ArrayList<Block> stackedBlocks;
     private static Block swingBlock;
+    private static BufferedImage background;
 
     private boolean running;
     private Thread thread;
@@ -62,6 +66,11 @@ public class Game extends Canvas implements Runnable {
 
     public void initialize(){
         //put image and sound loading here
+        try {
+            background = ImageIO.read(new File("res/gameBond.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         keyManager =new KeyManager();
         keyManager.setGame(this);
         this.addKeyListener(keyManager);
@@ -98,8 +107,7 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.white);
         g.fillRect(0,0,1920,1080);
 
-        g.setColor(Color.blue);
-        g.fillRect(640,0,640,1080);
+        g.drawImage(background,640,-3240,null);
 
         g.drawImage(swingBlock.getBlockImg(), swingBlock.getPosX(), swingBlock.getPosY(),null);
 
