@@ -9,10 +9,14 @@ import java.util.Date;
 public class Player implements Runnable {
     Socket clientSocket;
     String serverName;
+    int playerid;
+    int score;
+    int playerLives;
 
     public Player(Socket s, String n) {
         this.clientSocket = s;
         this.serverName = n;
+        //Add player ID to constructor
 
     }
     
@@ -28,9 +32,16 @@ public class Player implements Runnable {
             DataOutputStream dop = new DataOutputStream(clientSocket.getOutputStream());
 
             while (connected) {
-            	//Shit that is calculated for the player happens here
+            	//Stuff that is calculated for the player happens here
             	//
+            	//Calculate score after block fell down
             	//
+            	//Send score to the client
+            	dop.writeInt(score);
+            	//Calculate if the player lost a life
+            	//
+            	//Send amount of lives back to player
+            	dop.writeInt(playerLives);
                
             }
         } catch (IOException e) {
