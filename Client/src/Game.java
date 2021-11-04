@@ -43,6 +43,7 @@ public class Game extends Canvas implements Runnable {
 
 
     public static void main(String[] args) {
+        /*
         Scanner input = new Scanner(System.in);
         boolean connect = true;
         System.out.println("Enter ip address, for example 192.168.1.1 ");
@@ -64,7 +65,7 @@ public class Game extends Canvas implements Runnable {
         } catch (IOException ex) {
             System.out.println(ex.toString() + '\n');
         }
-
+            */
         Game game = new Game();
         game.initialize();
 

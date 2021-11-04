@@ -5,10 +5,11 @@ import java.io.IOException;
 
 public class Block {
     private BufferedImage blockImg;
-    private int posX, posY, blockSpawnX = 747, blockSpawnY = 0, blockwidth = 213, fallMargin = 107,
+    private int posX, posY, blockSpawnX = 646, blockSpawnY = 0, blockwidth = 213, fallMargin = 107,
             bottomBoundY = 512, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
 
-    private double fallAcceleration = 1.0982;
+
+    private double fallSpeed =8, fallAcceleration = 1.0982;
     private boolean falling, swinging, swingLeft;
     private Game game;
 
@@ -27,11 +28,13 @@ public class Block {
 
     public void fall() {
         if (falling) {
-            posY++;
+            posY+= fallSpeed;
+            fallSpeed *= fallAcceleration;
             if (posX + blockwidth / 2 <= (game.getLastBlockCenterX() + fallMargin) && posX + blockwidth / 2 >= (game.getLastBlockCenterX() - fallMargin)) {
 
                 if (posY >= bottomBoundY) {
                     falling = false;
+                    posY=bottomBoundY;
                     game.setBlockCenter(posX);
                     game.addBlockToStack(this);
                     game.hitMarker();
