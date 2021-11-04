@@ -37,9 +37,9 @@ public class Server {
                     System.out.println("Client "+clients+" has name: "+ inetAddress.getHostName()+" and address: "+inetAddress.getHostAddress());
 
                     //New thread is made with a Player constructor, that passes client socket and server name on
-                    //if (clients <= 3){
+                    if (clients < 3){
                     	new Thread(new Player(clientSocket, "multi server")).start();
-                    //}
+                    }
                     
                 }
             } catch (IOException e) {
