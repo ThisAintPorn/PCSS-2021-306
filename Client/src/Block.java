@@ -5,17 +5,19 @@ import java.io.IOException;
 
 public class Block {
     private BufferedImage blockImg;
-    private int posX, posY, blockSpawnX=747,blockSpawnY=0,bottomBoundY=512,
-            leftOpponentBound= 640, rightOpponentBound = 1067; //1280-213
+    private int posX, posY, blockSpawnX = 747, blockSpawnY = 0, blockwidth = 213, fallMargin = 107,
+            bottomBoundY = 512, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
+
     private double fallAcceleration = 1.0982;
-    private boolean falling, swinging,swingLeft;
+    private boolean falling, swinging, swingLeft;
+    private Game game;
 
 
-
-    public Block(){
+    public Block(Game g) {
         this.posX = blockSpawnX;
         this.posY = blockSpawnY;
-        this.swinging=true;
+        this.swinging = true;
+        this.game = g;
         try {
             blockImg = ImageIO.read(new File("res/midtower.png"));
         } catch (IOException e) {
@@ -23,53 +25,63 @@ public class Block {
         }
     }
 
-    public void fall(){
-        if(falling) {
-            if (posY < bottomBoundY) {
-                posY ++;
-            }
-            else {
-                falling=false;
+    public void fall() {
+        if (falling) {
+            posY++;
+            if (posX + blockwidth / 2 <= (game.getLastBlockCenterX() + fallMargin) && posX + blockwidth / 2 >= (game.getLastBlockCenterX() - fallMargin)) {
+
+                if (posY >= bottomBoundY) {
+                    falling = false;
+                    game.setBlockCenter(posX);
+                    game.addBlockToStack(this);
+                    game.hitMarker();
+                }
             }
         }
     }
 
-    public void swing(){
-        if(swinging) {
-            if(posX<rightOpponentBound && !swingLeft){
-                posX++;
+    public void swing() {
+        if (swinging) {
+            if (posX < rightOpponentBound && !swingLeft) {
+                posX += 1 + game.getStackHeight();
             }
-            if(posX>leftOpponentBound && swingLeft){
-                posX--;
+            if (posX > leftOpponentBound && swingLeft) {
+                posX -= 1 + game.getStackHeight();
             }
-            if(posX>=rightOpponentBound && !swingLeft){
-                swingLeft=true;
+            if (posX >= rightOpponentBound && !swingLeft) {
+                swingLeft = true;
             }
-            if(posX<=leftOpponentBound && swingLeft){
-                swingLeft=false;
+            if (posX <= leftOpponentBound && swingLeft) {
+                swingLeft = false;
             }
         }
     }
 
-    public void setSwinging(boolean b){
-        this.swinging=b;
+    public void setSwinging(boolean b) {
+        this.swinging = b;
     }
-    public boolean isSwinging(){
+
+    public boolean isSwinging() {
         return swinging;
     }
-    public void setfalling(boolean b){
-        this.falling=b;
+
+    public void setfalling(boolean b) {
+        this.falling = b;
     }
-    public boolean isFalling(){
+
+    public boolean isFalling() {
         return falling;
     }
-    public BufferedImage getBlockImg(){
+
+    public BufferedImage getBlockImg() {
         return this.blockImg;
     }
-    public int getPosX(){
+
+    public int getPosX() {
         return posX;
     }
-    public int getPosY(){
+
+    public int getPosY() {
         return posY;
     }
 
