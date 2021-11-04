@@ -28,9 +28,13 @@ public class Block {
 
     public void fall() {
         if (falling) {
-            posY+= fallSpeed;
+            System.out.println("falling Speed: "+fallSpeed+"Acceleration: "+fallAcceleration);
+            System.out.println("block posX: " + game.getSwingBlock().getPosX() + ", posY: " + game.getSwingBlock().getPosY());
+            posY+= (int) fallSpeed;
             fallSpeed *= fallAcceleration;
-            if (posX + blockwidth / 2 <= (game.getLastBlockCenterX() + fallMargin) && posX + blockwidth / 2 >= (game.getLastBlockCenterX() - fallMargin)) {
+           // if (posX + blockwidth / 2 <= (game.getLastBlockCenterX() + fallMargin) && posX + blockwidth / 2 >= (game.getLastBlockCenterX() - fallMargin)) {
+                //temporary
+            if (posX + blockwidth / 2 <= (game.getCenterPosX() + fallMargin) && posX + blockwidth / 2 >= (game.getCenterPosX() - fallMargin)) {
 
                 if (posY >= bottomBoundY) {
                     falling = false;
@@ -38,9 +42,23 @@ public class Block {
                     game.setBlockCenter(posX);
                     game.addBlockToStack(this);
                     game.hitMarker();
+                    fallSpeed=8;
+                    game.setSwingBlock( new Block(game));
+                }
+
+            }
+            else {
+                if (posY>=1080) {
+                    falling=false;
+                    game.missMarker();
+                    posY=0;
+                    fallSpeed=8;
+                    swinging=true;
+
                 }
             }
         }
+
     }
 
     public void swing() {
@@ -68,7 +86,7 @@ public class Block {
         return swinging;
     }
 
-    public void setfalling(boolean b) {
+    public void setFalling(boolean b) {
         this.falling = b;
     }
 

@@ -18,6 +18,7 @@ public class Game extends Canvas implements Runnable {
     private static final String gameTitle = "Tilted Towers";
     private static final int width = 1920, height = 1080;
     private static int playerLives = 3;
+    private static int score = 0;
     private static ArrayList<Block> blockStack;
     private static Block swingBlock;
     private static BufferedImage background;
@@ -92,8 +93,8 @@ public class Game extends Canvas implements Runnable {
                 lastFPSCheck = System.nanoTime();
                 long currentFPS = frames;
                 frames = 0;
-                System.out.println("FPS: " + currentFPS);
-                System.out.println("block posX: " + swingBlock.getPosX() + ", posY: " + swingBlock.getPosY());
+                //System.out.println("FPS: " + currentFPS);
+
             }
         }
         stop();
@@ -168,6 +169,9 @@ public class Game extends Canvas implements Runnable {
     public static Block getSwingBlock() {
         return swingBlock;
     }
+    public static void setSwingBlock(Block b) {
+        swingBlock =b;
+    }
 
     public KeyManager getKeyManager() {
         return keyManager;
@@ -189,8 +193,28 @@ public class Game extends Canvas implements Runnable {
         return lastBlockCenterX;
     }
 
+    public int getCenterPosX() {
+        return centerPosX;
+    }
+
     public void hitMarker() {
-        System.out.println("Sending info to server");
+        score++;
+        System.out.println("Point!, score is: "+score);
+        /*
+        try {
+            dop.writeInt(lastBlockCenterX);
+            dop.flush();
+        } catch (IOException ex) {
+            System.out.println(ex.toString() + '\n');
+        }
+
+         */
+    }
+
+    public void missMarker() {
+        System.out.println("Miss");
+
+        //lose life
         /*
         try {
             dop.writeInt(lastBlockCenterX);
