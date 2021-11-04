@@ -17,7 +17,7 @@ public class Block {
         this.swinging = true;
         this.game = g;
         try {
-            blockImg = ImageIO.read(new File("res/midtower.png"));
+            blockImg = ImageIO.read(new File("res/block.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,9 +40,16 @@ public class Block {
                     game.setBlockCenter(posX);
                     game.addBlockToStack(this);
                     game.hitMarker();
-                    fallSpeed=8;
+                    fallSpeed=8+ game.getStackHeight();
                     game.setSwingBlock( new Block(game));
                     game.moveUp();
+                    if(posY<game.getBlockHeight()){
+                        game.setBackgroundPosY(game.getBackgroundPosY()+game.getBlockHeight());
+                        game.setBottomBoundY(game.getBottomBoundY()+game.getBlockHeight());
+                        for (int i = 0; i < game.getBlockStack().size(); i++) {
+                            game.getBlockStack().get(i).setPosY(game.getBlockStack().get(i).getPosY()+game.getBlockHeight());
+                        }
+                    }
                 }
 
             }
@@ -51,7 +58,7 @@ public class Block {
                     falling=false;
                     game.missMarker();
                     posY=0;
-                    fallSpeed=8;
+                    fallSpeed=8+ game.getStackHeight();
                     swinging=true;
 
                 }
@@ -74,6 +81,11 @@ public class Block {
                 swingLeft = false;
             }
         }
+    }
+
+    public void moveOneUp(){
+        //posY+=1+game.getStackHeight();
+        posY++;
     }
 
     public void setSwinging(boolean b) {
@@ -100,13 +112,19 @@ public class Block {
         return posX;
     }
 
+    public void setPosX(int x) {
+        posX=x;
+    }
+
     public int getPosY() {
         return posY;
     }
 
-    public void moveOneUp(){
-        posY++;
+    public void setPosY(int y) {
+        posY=y;
     }
+
+
 
 }
 

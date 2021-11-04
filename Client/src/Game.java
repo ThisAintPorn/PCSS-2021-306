@@ -1,17 +1,13 @@
 
 import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Game extends Canvas implements Runnable {
 
@@ -22,9 +18,8 @@ public class Game extends Canvas implements Runnable {
     private static Block swingBlock;
 
 
-
     private static BufferedImage background;
-    private static int backgroundInitPosY = -3240;
+    private static int backgroundPosY = -3240;
 
     private boolean running;
     private Thread thread;
@@ -148,12 +143,12 @@ public class Game extends Canvas implements Runnable {
         //Draw here
 
 
-        g.drawImage(background, 640, backgroundInitPosY, null);
+        g.drawImage(background, 640, backgroundPosY, null);
 
         g.drawImage(swingBlock.getBlockImg(), swingBlock.getPosX(), swingBlock.getPosY(), null);
 
-        for(int i =0; i<blockStack.size(); i++) {
-            g.drawImage(blockStack.get(i).getBlockImg(),blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
+        for (int i = 0; i < blockStack.size(); i++) {
+            g.drawImage(blockStack.get(i).getBlockImg(), blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
         }
 
         //calibration-line
@@ -166,13 +161,16 @@ public class Game extends Canvas implements Runnable {
 
     }
 
-    public void moveUp(){
+    public void moveUp() {
 
-            backgroundInitPosY++;
-            bottomBoundY++;
-        for(int i =0; i<blockStack.size(); i++) {
+        //backgroundInitPosY+=1+getStackHeight();
+        //bottomBoundY+=1+getStackHeight();
+        backgroundPosY++;
+        bottomBoundY++;
+        for (int i = 0; i < blockStack.size(); i++) {
             blockStack.get(i).moveOneUp();
         }
+
     }
 
     public void stop() {
@@ -186,7 +184,7 @@ public class Game extends Canvas implements Runnable {
 
     public void hitMarker() {
         score++;
-        System.out.println("Point!, score is: "+score);
+        System.out.println("Point!, score is: " + score);
         /*
         try {
             dop.writeInt(lastBlockCenterX);
@@ -213,12 +211,13 @@ public class Game extends Canvas implements Runnable {
          */
     }
 
-        //getters and setters below
+    //getters and setters below
     public static Block getSwingBlock() {
         return swingBlock;
     }
+
     public static void setSwingBlock(Block b) {
-        swingBlock =b;
+        swingBlock = b;
     }
 
     public KeyManager getKeyManager() {
@@ -289,20 +288,27 @@ public class Game extends Canvas implements Runnable {
         return fallMargin;
     }
 
-    public static int getBottomBoundY(){
+    public static int getBottomBoundY() {
         return bottomBoundY;
     }
 
-    public static void setBottomBoundY(int y ){
+    public static void setBottomBoundY(int y) {
         bottomBoundY = y;
     }
 
-    public static int getLeftOpponentBound(){
+    public static int getLeftOpponentBound() {
         return leftOpponentBound;
     }
 
-    public static int getRightOpponentBound(){
+    public static int getRightOpponentBound() {
         return rightOpponentBound;
+    }
+
+    public int getBackgroundPosY() {
+        return backgroundPosY;
+    }
+    public void setBackgroundPosY(int y) {
+        backgroundPosY = y;
     }
 
 

@@ -61,7 +61,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-field">
           <url>file://$PROJECT_DIR$/src/Game.java</url>
-          <line>19</line>
+          <line>15</line>
           <properties field="playerLives" class="Game" />
           <option name="timeStamp" value="1" />
         </line-breakpoint>
