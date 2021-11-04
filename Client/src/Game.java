@@ -16,12 +16,15 @@ import java.util.Scanner;
 public class Game extends Canvas implements Runnable {
 
     private static final String gameTitle = "Tilted Towers";
-    private static final int width = 1920, height = 1080;
-    private static int playerLives = 3;
-    private static int score = 0;
+    private static final int width = 1920, height = 1080, blockWidth = 213, blockHeight = 219, fallMargin = 107, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
+    private static int playerLives = 3, score = 0, bottomBoundY = 512;
     private static ArrayList<Block> blockStack;
     private static Block swingBlock;
+
+
+
     private static BufferedImage background;
+    private static int backgroundInitPosY = -3240;
 
     private boolean running;
     private Thread thread;
@@ -127,6 +130,8 @@ public class Game extends Canvas implements Runnable {
     public void tick() {
         swingBlock.swing();
         swingBlock.fall();
+        moveUp();
+
 
     }
 
@@ -143,9 +148,13 @@ public class Game extends Canvas implements Runnable {
         //Draw here
 
 
-        g.drawImage(background, 640, -3240, null);
+        g.drawImage(background, 640, backgroundInitPosY, null);
 
         g.drawImage(swingBlock.getBlockImg(), swingBlock.getPosX(), swingBlock.getPosY(), null);
+
+        for(int i =0; i<blockStack.size(); i++) {
+            g.drawImage(blockStack.get(i).getBlockImg(),blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
+        }
 
         //calibration-line
         g.setColor(Color.black);
@@ -157,6 +166,15 @@ public class Game extends Canvas implements Runnable {
 
     }
 
+    public void moveUp(){
+
+            backgroundInitPosY++;
+            bottomBoundY++;
+        for(int i =0; i<blockStack.size(); i++) {
+            blockStack.get(i).moveOneUp();
+        }
+    }
+
     public void stop() {
         try {
             thread.join();
@@ -166,6 +184,36 @@ public class Game extends Canvas implements Runnable {
         }
     }
 
+    public void hitMarker() {
+        score++;
+        System.out.println("Point!, score is: "+score);
+        /*
+        try {
+            dop.writeInt(lastBlockCenterX);
+            dop.flush();
+        } catch (IOException ex) {
+            System.out.println(ex.toString() + '\n');
+        }
+
+         */
+    }
+
+    public void missMarker() {
+        System.out.println("Miss");
+
+        //lose life
+        /*
+        try {
+            dop.writeInt(lastBlockCenterX);
+            dop.flush();
+        } catch (IOException ex) {
+            System.out.println(ex.toString() + '\n');
+        }
+
+         */
+    }
+
+        //getters and setters below
     public static Block getSwingBlock() {
         return swingBlock;
     }
@@ -197,32 +245,65 @@ public class Game extends Canvas implements Runnable {
         return centerPosX;
     }
 
-    public void hitMarker() {
-        score++;
-        System.out.println("Point!, score is: "+score);
-        /*
-        try {
-            dop.writeInt(lastBlockCenterX);
-            dop.flush();
-        } catch (IOException ex) {
-            System.out.println(ex.toString() + '\n');
-        }
-
-         */
+    public static int getPlayerLives() {
+        return playerLives;
     }
 
-    public void missMarker() {
-        System.out.println("Miss");
-
-        //lose life
-        /*
-        try {
-            dop.writeInt(lastBlockCenterX);
-            dop.flush();
-        } catch (IOException ex) {
-            System.out.println(ex.toString() + '\n');
-        }
-
-         */
+    public static void setPlayerLives(int playerLives) {
+        Game.playerLives = playerLives;
     }
+
+    public static ArrayList<Block> getBlockStack() {
+        return blockStack;
+    }
+
+    public static void setBlockStack(ArrayList<Block> blockStack) {
+        Game.blockStack = blockStack;
+    }
+
+    public static int getScore() {
+        return score;
+    }
+
+    public static void setScore(int score) {
+        Game.score = score;
+    }
+
+    public static BufferedImage getBackgroundimg() {
+        return background;
+    }
+
+    public static void setBackground(BufferedImage background) {
+        Game.background = background;
+    }
+
+    public static int getBlockWidth() {
+        return blockWidth;
+    }
+
+    public static int getBlockHeight() {
+        return blockHeight;
+    }
+
+    public static int getFallMargin() {
+        return blockHeight;
+    }
+
+    public static int getBottomBoundY(){
+        return bottomBoundY;
+    }
+
+    public static void setBottomBoundY(int y ){
+        bottomBoundY = y;
+    }
+
+    public static int getLeftOpponentBound(){
+        return leftOpponentBound;
+    }
+
+    public static int getRightOpponentBound(){
+        return rightOpponentBound;
+    }
+
+
 }
