@@ -23,7 +23,7 @@ public class Player implements Runnable {
     
     public void run() {
         try {
-
+        	
             boolean connected = true;
             System.out.println("Connection to client at: " + new Date());
 
@@ -46,6 +46,8 @@ public class Player implements Runnable {
             	//
             	//Send amount of lives back to player
             	dop.writeInt(playerLives);
+            	
+            	
                
             }
         } catch (IOException e) {
