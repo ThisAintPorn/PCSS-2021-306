@@ -286,7 +286,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static int getFallMargin() {
-        return blockHeight;
+        return fallMargin;
     }
 
     public static int getBottomBoundY(){

@@ -31,7 +31,7 @@ public class Block {
             fallSpeed *= fallAcceleration;
            // if (posX + blockwidth / 2 <= (game.getLastBlockCenterX() + fallMargin) && posX + blockwidth / 2 >= (game.getLastBlockCenterX() - fallMargin)) {
                 //temporary
-            if (posX + game.getBlockWidth() / 2 <= (game.getCenterPosX() + game.getFallMargin()) && posX + game.getBlockWidth() / 2 >= (game.getCenterPosX() - game.getFallMargin())) {
+            if (posX + (game.getBlockWidth()/2) <= (game.getCenterPosX() + game.getFallMargin()) && posX + (game.getBlockWidth()/2) >= (game.getCenterPosX() - game.getFallMargin())) {
 
                 if (posY >= game.getBottomBoundY()) {
                     falling = false;
