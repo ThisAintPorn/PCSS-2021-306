@@ -17,6 +17,12 @@ public class Block {
         this.game = g;
     }
 
+    public Block(Game g,int x) {
+        this.game = g;
+        this.posX = x;
+        this.posY = g.getEnemyBottomBounds();
+    }
+
     public void fall() {
         if (falling) {
             System.out.println("falling Speed: " + fallSpeed + "Acceleration: " + fallAcceleration);
