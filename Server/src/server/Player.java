@@ -12,10 +12,12 @@ public class Player implements Runnable {
     int playerId;
     int score;
     int playerLives;
-    int blockPosition;
+    int lastBlockPos;
     Server server;
-    int p1score, p2score, p3score, p1lives, p2lives, p3lives;
+    //int p1score, p2score, p3score, p1lives, p2lives, p3lives;
     boolean firstTimeId = true;
+    boolean receiveBool = false;
+    boolean putBlock = false;
 
     public Player(Socket s, String n, int id, Server serv) {
         this.clientSocket = s;
@@ -46,11 +48,9 @@ public class Player implements Runnable {
             		firstTimeId = false;
             	}
             	
-            	//Selects player and sets the corresponding lives and score to the one in the object.
-            	playerSelector();
             	
             	//Receives other players info about corresponding scores and lives (and probably block positions?)
-            	playerReceiver();
+            	//playerReceiver();
 
             	//Receive score from the client
             	score = dip.readInt();
@@ -58,25 +58,65 @@ public class Player implements Runnable {
             	//Receive amount of lives from client
             	playerLives = dip.readInt();
             	
-            	//Receive information about where the block landed from client
-            	//blockPosition = dip.readInt();
+            	//Receive block position
+            	receiveBool = dip.readBoolean();
+            	if(receiveBool) {
+            		lastBlockPos = dip.readInt();
+            		receiveBool = false;
+            		if(playerId == 1) {
+            			server.setP1Send(true);
+            		}else if (playerId == 2) {
+            			server.setP2Send(true);
+            		}else if (playerId == 3) {
+            			server.setP3Send(true);
+            		}
+            		
+            	}
+            	
+            	if(playerId == 1 && ) {
+        			
+        		}else if (playerId == 2) {
+        			server.setP2Send(true);
+        		}else if (playerId == 3) {
+        			server.setP3Send(true);
+        		}
+            	
+            	//Selects player and sets the corresponding lives and score to the one in the object.
+            	playerSelector();
+            	
+            	
+            	
+            	//Send block position
+            	/*if (putBlock) {
+            		if(playerId == 1) {
+                		dop.writeInt(server.getP2LastBlock());
+                		dop.writeInt(server.getP3LastBlock());
+                	}else if(playerId == 2) {
+                		dop.writeInt(server.getP1LastBlock());
+                		dop.writeInt(server.getP3LastBlock());
+                	}else if(playerId == 3) {
+                		dop.writeInt(server.getP1LastBlock());
+                		dop.writeInt(server.getP2LastBlock());
+                	}
+            	}*/
+            	
             	
             	//Send other players' data to client
             	if(playerId == 1) {
-            		dop.writeInt(p2score);
-            		dop.writeInt(p2lives);
-            		dop.writeInt(p3score);
-            		dop.writeInt(p3lives);
+            		dop.writeInt(server.getP2Score());
+            		dop.writeInt(server.getP2Lives());
+            		dop.writeInt(server.getP3Score());
+            		dop.writeInt(server.getP3Lives());
             	}else if(playerId == 2) {
-            		dop.writeInt(p1score);
-            		dop.writeInt(p1lives);
-            		dop.writeInt(p3score);
-            		dop.writeInt(p3lives);
+            		dop.writeInt(server.getP1Score());
+            		dop.writeInt(server.getP1Lives());
+            		dop.writeInt(server.getP3Score());
+            		dop.writeInt(server.getP3Lives());
             	}else if(playerId == 3) {
-            		dop.writeInt(p1score);
-            		dop.writeInt(p1lives);
-            		dop.writeInt(p2score);
-            		dop.writeInt(p2lives);
+            		dop.writeInt(server.getP1Score());
+            		dop.writeInt(server.getP1Lives());
+            		dop.writeInt(server.getP2Score());
+            		dop.writeInt(server.getP2Lives());
             	}
             	
             	
@@ -96,15 +136,18 @@ public class Player implements Runnable {
     	if(playerId == 1) {
     		server.setP1Score(score);
     		server.setP1Lives(playerLives);
+    		server.setP1LastBlock(lastBlockPos);
     	}else if(playerId==2) {
     		server.setP2Score(score);
     		server.setP2Lives(playerLives);
+    		server.setP2LastBlock(lastBlockPos);
     	}else if(playerId==3) {
     		server.setP3Score(score);
     		server.setP3Lives(playerLives);
+    		server.setP3LastBlock(lastBlockPos);
     	}
     }
-    
+    /*
     public void playerReceiver() {
     	if(playerId == 1) {
     		p2score = server.getP2Score();
@@ -123,4 +166,5 @@ public class Player implements Runnable {
     		p1lives = server.getP1Lives();
     	}
     }
+    */
 }

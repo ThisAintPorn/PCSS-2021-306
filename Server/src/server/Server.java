@@ -10,8 +10,8 @@ public class Server {
 	static int port = 2345;
     double rate, amount;
     int years,clients;
-    static int p1score, p2score, p3score, p1lives, p2lives, p3lives;
- 
+    static int p1score, p2score, p3score, p1lives, p2lives, p3lives, p1LastBlock, p2LastBlock, p3LastBlock; 
+    static boolean p1send, p2send, p3send;
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -104,5 +104,53 @@ public class Server {
     
     public int getP3Lives() {
     	return p3lives;
+    }
+    
+    public static void setP1LastBlock(int b) {
+    	p1LastBlock = b;
+    }
+    
+    public int getP1LastBlock() {
+    	return p1LastBlock;
+    }
+    
+    public static void setP2LastBlock(int b) {
+    	p2LastBlock = b;
+    }
+    
+    public int getP2LastBlock() {
+    	return p2LastBlock;
+    }
+    
+    public static void setP3LastBlock(int b) {
+    	p3LastBlock = b;
+    }
+    
+    public int getP3LastBlock() {
+    	return p3LastBlock;
+    }
+    
+    public static void setP1Send(boolean send) {
+    	p1send = send;
+    }
+    
+    public boolean getP1Send() {
+    	return p1send;
+    }
+    
+    public static void setP2Send(boolean send) {
+    	p2send = send;
+    }
+    
+    public boolean getP2Send() {
+    	return p2send;
+    }
+    
+    public static void setP3Send(boolean send) {
+    	p3send = send;
+    }
+    
+    public boolean getP3Send() {
+    	return p3send;
     }
 }
