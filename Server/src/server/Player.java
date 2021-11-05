@@ -9,17 +9,18 @@ import java.util.Date;
 public class Player implements Runnable {
     Socket clientSocket;
     String serverName;
-    int playerid;
+    int playerId;
     int score;
     int playerLives;
     int blockPosition;
     Server server;
+    int p1score, p2score, p3score, p1lives, p2lives, p3lives;
 
     public Player(Socket s, String n, int id, Server serv) {
         this.clientSocket = s;
         this.serverName = n;
         //Add player ID to constructor
-        this.playerid = id;
+        this.playerId = id;
         this.server = serv;
 
     }
@@ -36,19 +37,21 @@ public class Player implements Runnable {
             DataOutputStream dop = new DataOutputStream(clientSocket.getOutputStream());
 
             while (connected) {
-            	//Stuff that is calculated for the player happens here
+            	//Selects player and sets the corresponding lives and score to the one in the object.
+            	playerSelector();
+            	
+            	//Receives other players info about corresponding scores and lives (and probably block positions?)
+            	playerReceiver();
+
+            	//Receive score from the client
+            	score = dip.readInt();
+     
+            	//Receive amount of lives back to player
+            	playerLives = dip.readInt();
+            	
             	//Receive information about where the block landed from client
             	blockPosition = dip.readInt();
-            	//Calculate crookedness of the tower? Maybe?
-            	//
-            	//Calculate score after block fell down
-            	//
-            	//Send score to the client
-            	dop.writeInt(score);
-            	//Calculate if the player lost a life
-            	//
-            	//Send amount of lives back to player
-            	dop.writeInt(playerLives);
+            	
             	
             	
                
@@ -60,5 +63,37 @@ public class Player implements Runnable {
             e.printStackTrace();
             System.out.println("something went wrong");
         }
+    }
+    
+    public void playerSelector() {
+    	if(playerId == 1) {
+    		server.setP1Score(score);
+    		server.setP1Lives(playerLives);
+    	}else if(playerId==2) {
+    		server.setP2Score(score);
+    		server.setP2Lives(playerLives);
+    	}else if(playerId==3) {
+    		server.setP3Score(score);
+    		server.setP3Lives(playerLives);
+    	}
+    }
+    
+    public void playerReceiver() {
+    	if(playerId == 1) {
+    		p2score = server.getP2Score();
+    		p2lives = server.getP2Lives();
+    		p3score = server.getP3Score();
+    		p3lives = server.getP3Lives();
+    	}else if(playerId==2) {
+    		p1score = server.getP1Score();
+    		p1lives = server.getP1Lives();
+    		p3score = server.getP3Score();
+    		p3lives = server.getP3Lives();
+    	}else if(playerId==3) {
+    		p2score = server.getP2Score();
+    		p2lives = server.getP2Lives();
+    		p1score = server.getP1Score();
+    		p1lives = server.getP1Lives();
+    	}
     }
 }

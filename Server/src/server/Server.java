@@ -59,4 +59,52 @@ public class Server {
             System.out.println("something went wrong");
         }
     }
+    
+    public void setP1Score(int s) {
+    	this.p1score = s;
+    }
+    
+    public void setP1Lives(int l) {
+    	this.p1lives = l;
+    }
+    
+    public int getP1Score() {
+    	return p1score;
+    }
+    
+    public int getP1Lives() {
+    	return p1lives;
+    }
+    
+    public void setP2Score(int s) {
+    	this.p2score = s;
+    }
+    
+    public void setP2Lives(int l) {
+    	this.p2lives = l;
+    }
+    
+    public int getP2Score() {
+    	return p2score;
+    }
+    
+    public int getP2Lives() {
+    	return p2lives;
+    }
+    
+    public void setP3Score(int s) {
+    	this.p3score = s;
+    }
+    
+    public void setP3Lives(int l) {
+    	this.p3lives = l;
+    }
+    
+    public int getP3Score() {
+    	return p3score;
+    }
+    
+    public int getP3Lives() {
+    	return p3lives;
+    }
 }
