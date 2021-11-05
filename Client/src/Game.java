@@ -16,12 +16,13 @@ public class Game extends Canvas implements Runnable {
     private static final String gameTitle = "Tilted Towers";
     private static final int width = 1920, height = 1080, blockWidth = 213, blockHeight = 219, fallMargin = 107, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
     private static int playerLives = 3, score = 0, bottomBoundY = 512;
-    private static ArrayList<Block> blockStack;
+    private static ArrayList<Block> blockStack, leftBlockStack, rightBlockStack;
     private static Block swingBlock;
 
 
     private static BufferedImage background, blockImg;
-    private static int backgroundPosY = -3240;
+    private static int backgroundPosY = -3240, leftBackgroundY = -3240, rightBackgroundY = -3240;
+
 
     private boolean running;
     private Thread thread;
@@ -39,6 +40,7 @@ public class Game extends Canvas implements Runnable {
     private int p1score, p2score, p3score, p1lives, p2lives, p3lives;
     private String ipAddress;
     private int port;
+    private boolean sendBool;
 
     private KeyManager keyManager;
 
@@ -50,10 +52,9 @@ public class Game extends Canvas implements Runnable {
     public static void main(String[] args) {
         Game game = new Game();
 
-
+        /*
         //traffic
         Scanner input = new Scanner(System.in);
-
         System.out.println("Enter ip address for example 192.168.1.1");
         game.ipAddress = input.next();
         System.out.println("The ip address is " + game.ipAddress);
@@ -61,13 +62,13 @@ public class Game extends Canvas implements Runnable {
         game.port = input.nextInt();
         System.out.println("The port is " + game.port);
         input.close();
+        */
 
-        window = new Window(width, height, gameTitle,game);
+        window = new Window(width, height, gameTitle, game);
 
 
         game.initialize();
         game.traffic(); //creates new thread for traffic
-
 
 
     }
@@ -142,7 +143,9 @@ public class Game extends Canvas implements Runnable {
         g.clearRect(0, 0, width, height);
 
         //Draw here
+        g.drawImage(background, 0, leftBackgroundY, null);
         g.drawImage(background, 640, backgroundPosY, null);
+        g.drawImage(background, 1280, rightBackgroundY, null);
 
         for (int i = 0; i < blockStack.size(); i++) {
             g.drawImage(blockImg, blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
@@ -152,22 +155,40 @@ public class Game extends Canvas implements Runnable {
 
 
         g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
-        g.drawString(Integer.toString(score),640,25);
-        g.drawString(Integer.toString(playerLives),1265,25);
+        g.drawString(Integer.toString(score), 640, 25);
+        g.drawString(Integer.toString(playerLives), 1265, 25);
 
         bs.show();
         g.dispose();
     }
 
     public void moveUp() {
-        //backgroundInitPosY+=1+getStackHeight();
-        //bottomBoundY+=1+getStackHeight();
         backgroundPosY++;
         bottomBoundY++;
         for (int i = 0; i < blockStack.size(); i++) {
             blockStack.get(i).moveOneUp();
         }
+       /* for (int i = 0; i < leftBlockStack.size(); i++) {
+            leftBlockStack.get(i).moveOneUp();
+        }
+        for (int i = 0; i < rightBlockStack.size(); i++) {
+            rightBlockStack.get(i).moveOneUp();
+        }*/
 
+    }
+
+    public void moveUpLeft() {
+        leftBackgroundY += 219;
+        for (int i = 0; i < blockStack.size(); i++) {
+            leftBlockStack.get(i).setPosY(getY() + blockHeight);
+        }
+    }
+
+    public void moveUpRight() {
+        leftBackgroundY += 219;
+        for (int i = 0; i < rightBlockStack.size(); i++) {
+            rightBlockStack.get(i).setPosY(getY() + blockHeight);
+        }
     }
 
     public void stop() {
@@ -180,6 +201,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void hitMarker() {
+        setSendBool(true);
         score++;
         System.out.println("Point!, score is: " + score);
         /*
@@ -209,8 +231,8 @@ public class Game extends Canvas implements Runnable {
          */
     }
 
-    public void traffic(){
-        new Thread(()-> {
+    public void traffic() {
+        new Thread(() -> {
             try {//A socket to connect to the server
                 Socket connectToServer = new Socket(ipAddress, port);
 
@@ -234,6 +256,11 @@ public class Game extends Canvas implements Runnable {
 
                     //Block position
                     //INSERT HERE YO
+                    if(sendBool){
+                        dop.writeBoolean(true);
+                        dop.writeInt(lastBlockCenterX);
+                        sendBool=false;
+                    }
 
                     //Receive other players' data from server
                     if (playerId == 1) {
@@ -241,16 +268,23 @@ public class Game extends Canvas implements Runnable {
                         p2lives = dip.readInt();
                         p3score = dip.readInt();
                         p3lives = dip.readInt();
+
+
                     } else if (playerId == 2) {
                         p1score = dip.readInt();
                         p1lives = dip.readInt();
+                        //add a read of players lastBlocCenterX
                         p3score = dip.readInt();
                         p3lives = dip.readInt();
+                        //add a read of players lastBlocCenterX
+
                     } else if (playerId == 3) {
                         p1score = dip.readInt();
                         p1lives = dip.readInt();
+                        //add a read of players lastBlocCenterX
                         p2score = dip.readInt();
                         p2lives = dip.readInt();
+                        //add a read of players lastBlocCenterX
                     }
 
                 }
@@ -357,7 +391,12 @@ public class Game extends Canvas implements Runnable {
     public int getBackgroundPosY() {
         return backgroundPosY;
     }
+
     public void setBackgroundPosY(int y) {
         backgroundPosY = y;
+    }
+
+    public void setSendBool(boolean b){
+        sendBool=b;
     }
 }

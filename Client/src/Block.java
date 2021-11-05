@@ -26,7 +26,7 @@ public class Block {
             if (posX + (game.getBlockWidth() / 2) <= (game.getLastBlockCenterX() + game.getFallMargin()) &&
                     posX + (game.getBlockWidth() / 2) >= (game.getLastBlockCenterX() - game.getFallMargin())) {
 
-                if (posY >= game.getBottomBoundY()) {
+                if (posY >= game.getBottomBoundY()) { //actually hitting wiht block
                     falling = false;
                     posY = game.getBottomBoundY();
                     game.setBottomBoundY(game.getBottomBoundY() - 219);
@@ -46,7 +46,7 @@ public class Block {
                 }
 
             } else {
-                if (posY >= 1080) {
+                if (posY >= game.getHeight()) { //missing with block
                     falling = false;
                     game.missMarker();
                     posY = 0;
@@ -76,7 +76,6 @@ public class Block {
     }
 
     public void moveOneUp() {
-        //posY+=1+game.getStackHeight();
         posY++;
     }
 
