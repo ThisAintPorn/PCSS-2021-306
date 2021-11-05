@@ -14,14 +14,16 @@ import java.util.Scanner;
 public class Game extends Canvas implements Runnable {
 
     private static final String gameTitle = "Tilted Towers";
-    private static final int width = 1920, height = 1080, blockWidth = 213, blockHeight = 219, fallMargin = 107, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
+    private static final int width = 1920, height = 1080, blockWidth = 213, blockHeight = 219, fallMargin = 107,
+            backgroundHeight = 4320, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
     private static int playerLives = 3, score = 0, bottomBoundY = 512, enemyBottomBounds = 512;
     private static ArrayList<Block> blockStack, leftBlockStack, rightBlockStack;
     private static Block swingBlock;
 
 
-    private static BufferedImage background, blockImg;
-    private static int backgroundPosY = -3240, leftBackgroundY = -3240, rightBackgroundY = -3240;
+    private static BufferedImage background, blockImg, loopbackground;
+    private static int backgroundPosY = -3240, leftBackgroundY = -3240, rightBackgroundY = -3240,
+            loopBackground1PosY = -3240 - backgroundHeight, loopBackground2PosY = -3240 - (2 * backgroundHeight);
 
 
     private boolean running;
@@ -103,6 +105,7 @@ public class Game extends Canvas implements Runnable {
         try {
             background = ImageIO.read(new File("res/background.png"));
             blockImg = ImageIO.read(new File("res/block.png"));
+            loopbackground = ImageIO.read(new File("res/loopbackground.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -147,6 +150,16 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(background, 640, backgroundPosY, null);
         g.drawImage(background, 1280, rightBackgroundY, null);
 
+        g.drawImage(loopbackground, 640, loopBackground1PosY, null);
+        if (loopBackground1PosY > 1080) {
+            loopBackground1PosY -= 2 * backgroundHeight;
+        }
+        g.drawImage(loopbackground, 640, loopBackground2PosY, null);
+        if (loopBackground2PosY > 1080) {
+            loopBackground2PosY -= 2 * backgroundHeight;
+        }
+
+
         for (int i = 0; i < blockStack.size(); i++) {
             g.drawImage(blockImg, blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
         }
@@ -154,37 +167,37 @@ public class Game extends Canvas implements Runnable {
         g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
         g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 
-        if(playerLives>0) {
+        if (playerLives > 0) {
             g.drawString(Integer.toString(playerLives), 1265, 25);
             g.drawString(Integer.toString(score), 640, 25);
         } else {
             g.setColor(Color.black);
-            g.fillRect(640,0,640, height);
+            g.fillRect(640, 0, 640, height);
             g.setColor(Color.white);
-            g.drawString("u fkn dead m8...",640+blockWidth, (height/2));
-            g.drawString("Your final score was: "+score , 640+fallMargin, (height/2)+30);
+            g.drawString("u fkn dead m8...", 640 + blockWidth, (height / 2));
+            g.drawString("Your final score was: " + score, 640 + fallMargin, (height / 2) + 30);
         }
 
-        if(p2lives>0) {
+        if (p2lives > 0) {
             g.drawString(Integer.toString(p2lives), 1265, 25);
             g.drawString(Integer.toString(p2score), 0, 25);
         } else {
             g.setColor(Color.black);
-            g.fillRect(0,0,640, height);
+            g.fillRect(0, 0, 640, height);
             g.setColor(Color.white);
-            g.drawString("u fkn dead m8...",0+blockWidth, (height/2));
-            g.drawString("Your final score was: "+p2score , 0+fallMargin, (height/2)+30);
+            g.drawString("u fkn dead m8...", 0 + blockWidth, (height / 2));
+            g.drawString("Your final score was: " + p2score, 0 + fallMargin, (height / 2) + 30);
         }
 
-        if(p3lives>0) {
+        if (p3lives > 0) {
             g.drawString(Integer.toString(p3lives), 1895, 25);
             g.drawString(Integer.toString(p3score), 1280, 25);
         } else {
             g.setColor(Color.black);
-            g.fillRect(1280,0,640, height);
+            g.fillRect(1280, 0, 640, height);
             g.setColor(Color.white);
-            g.drawString("u fkn dead m8...",1280+blockWidth, (height/2));
-            g.drawString("Your final score was: "+p3score , 1280+fallMargin, (height/2)+30);
+            g.drawString("u fkn dead m8...", 1280 + blockWidth, (height / 2));
+            g.drawString("Your final score was: " + p3score, 1280 + fallMargin, (height / 2) + 30);
         }
 
         bs.show();
@@ -194,6 +207,8 @@ public class Game extends Canvas implements Runnable {
     public void moveUp() {
         backgroundPosY++;
         bottomBoundY++;
+        loopBackground1PosY++;
+        loopBackground2PosY++;
         for (int i = 0; i < blockStack.size(); i++) {
             blockStack.get(i).moveOneUp();
         }
@@ -285,18 +300,17 @@ public class Game extends Canvas implements Runnable {
 
 
                     //Send block position
-                    if(sendBool){
+                    if (sendBool) {
                         dop.writeBoolean(true);
                         dop.writeInt(lastBlockCenterX);
-                        sendBool=false;
-                    }else {
+                        sendBool = false;
+                    } else {
                         dop.writeBoolean(false);
                     }
 
 
-                    
                     //Receive block position
-                    
+
 
                     //Receive other players' data from server
                     if (playerId == 1) {
