@@ -283,23 +283,17 @@ public class Game extends Canvas implements Runnable {
                     //Send lives to the server
                     dop.writeInt(playerLives);
 
-<<<<<<< HEAD
+
                     //Send block position
                     if(sendBool){
                         dop.writeBoolean(true);
                         dop.writeInt(lastBlockCenterX);
                         sendBool=false;
                     }else {
-                    	dop.writeBoolean(false);
-=======
-                    //Block position
-                    //INSERT HERE YO
-                    if (sendBool) {
-                        dop.writeBoolean(true);
-                        dop.writeInt(lastBlockCenterX);
-                        sendBool = false;
->>>>>>> 05df99d17ed8a01a366d43ca751757cd30948455
+                        dop.writeBoolean(false);
                     }
+
+
                     
                     //Receive block position
                     
