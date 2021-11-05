@@ -15,7 +15,7 @@ public class Game extends Canvas implements Runnable {
 
     private static final String gameTitle = "Tilted Towers";
     private static final int width = 1920, height = 1080, blockWidth = 213, blockHeight = 219, fallMargin = 107, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
-    private static int playerLives = 3, score = 0, bottomBoundY = 512;
+    private static int playerLives = 3, score = 0, bottomBoundY = 512, enemyBottomBounds = 512;
     private static ArrayList<Block> blockStack, leftBlockStack, rightBlockStack;
     private static Block swingBlock;
 
@@ -31,7 +31,7 @@ public class Game extends Canvas implements Runnable {
     private static long lastFPSCheck = 0;
     private static long msPerFrame = 16;
     private static int centerPosX = 960;
-    private static int lastBlockCenterX = 960;
+    private static int lastBlockCenterX = 960, leftLastBlockcenterX, rightLastBlockcenterX;
     private static Window window;
 
     boolean connect = true;
@@ -152,11 +152,40 @@ public class Game extends Canvas implements Runnable {
         }
 
         g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 
+        if(playerLives>0) {
+            g.drawString(Integer.toString(playerLives), 1265, 25);
+            g.drawString(Integer.toString(score), 640, 25);
+        } else {
+            g.setColor(Color.black);
+            g.fillRect(640,0,640, height);
+            g.setColor(Color.white);
+            g.drawString("u fkn dead m8...",640+blockWidth, (height/2));
+            g.drawString("Your final score was: "+score , 640+fallMargin, (height/2)+30);
+        }
 
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
-        g.drawString(Integer.toString(score), 640, 25);
-        g.drawString(Integer.toString(playerLives), 1265, 25);
+        if(p2lives>0) {
+            g.drawString(Integer.toString(p2lives), 1265, 25);
+            g.drawString(Integer.toString(p2score), 0, 25);
+        } else {
+            g.setColor(Color.black);
+            g.fillRect(0,0,640, height);
+            g.setColor(Color.white);
+            g.drawString("u fkn dead m8...",0+blockWidth, (height/2));
+            g.drawString("Your final score was: "+p2score , 0+fallMargin, (height/2)+30);
+        }
+
+        if(p3lives>0) {
+            g.drawString(Integer.toString(p3lives), 1895, 25);
+            g.drawString(Integer.toString(p3score), 1280, 25);
+        } else {
+            g.setColor(Color.black);
+            g.fillRect(1280,0,640, height);
+            g.setColor(Color.white);
+            g.drawString("u fkn dead m8...",1280+blockWidth, (height/2));
+            g.drawString("Your final score was: "+p3score , 1280+fallMargin, (height/2)+30);
+        }
 
         bs.show();
         g.dispose();
@@ -254,6 +283,7 @@ public class Game extends Canvas implements Runnable {
                     //Send lives to the server
                     dop.writeInt(playerLives);
 
+<<<<<<< HEAD
                     //Send block position
                     if(sendBool){
                         dop.writeBoolean(true);
@@ -261,6 +291,14 @@ public class Game extends Canvas implements Runnable {
                         sendBool=false;
                     }else {
                     	dop.writeBoolean(false);
+=======
+                    //Block position
+                    //INSERT HERE YO
+                    if (sendBool) {
+                        dop.writeBoolean(true);
+                        dop.writeInt(lastBlockCenterX);
+                        sendBool = false;
+>>>>>>> 05df99d17ed8a01a366d43ca751757cd30948455
                     }
                     
                     //Receive block position
@@ -272,23 +310,16 @@ public class Game extends Canvas implements Runnable {
                         p2lives = dip.readInt();
                         p3score = dip.readInt();
                         p3lives = dip.readInt();
-
-
                     } else if (playerId == 2) {
                         p1score = dip.readInt();
                         p1lives = dip.readInt();
-                        //add a read of players lastBlocCenterX
                         p3score = dip.readInt();
                         p3lives = dip.readInt();
-                        //add a read of players lastBlocCenterX
-
                     } else if (playerId == 3) {
                         p1score = dip.readInt();
                         p1lives = dip.readInt();
-                        //add a read of players lastBlocCenterX
                         p2score = dip.readInt();
                         p2lives = dip.readInt();
-                        //add a read of players lastBlocCenterX
                     }
 
                 }
@@ -297,6 +328,14 @@ public class Game extends Canvas implements Runnable {
                 System.out.println(ex.toString() + '\n');
             }
         }).start();
+    }
+
+    public void addToLeftBlockStack(int x) {
+        leftBlockStack.add(new Block(this, leftLastBlockcenterX));
+    }
+
+    public void addToRightBlockStack(int x) {
+        leftBlockStack.add(new Block(this, rightLastBlockcenterX));
     }
 
     //getters and setters below
@@ -400,7 +439,11 @@ public class Game extends Canvas implements Runnable {
         backgroundPosY = y;
     }
 
-    public void setSendBool(boolean b){
-        sendBool=b;
+    public void setSendBool(boolean b) {
+        sendBool = b;
+    }
+
+    public int getEnemyBottomBounds() {
+        return enemyBottomBounds;
     }
 }

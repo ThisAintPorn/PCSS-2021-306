@@ -2,19 +2,28 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Block {
-    private int posX, posY, blockSpawnX = 646, blockSpawnY = 0;
+    private int posX, posY, blockSpawnY = 0;
     private double fallSpeed = 8, fallAcceleration = 1.0982;
     private boolean falling, swinging, swingLeft;
     private Game game;
 
 
     public Block(Game g) {
-        this.posX = blockSpawnX;
+
+        this.posX = ThreadLocalRandom.current().nextInt(640, game.getRightOpponentBound() + 1);
         this.posY = blockSpawnY;
         this.swinging = true;
         this.game = g;
+    }
+
+    public Block(Game g,int x) {
+        this.game = g;
+        this.posX = x;
+        this.posY = g.getEnemyBottomBounds();
     }
 
     public void fall() {
