@@ -29,6 +29,7 @@ public class Game extends Canvas implements Runnable {
     private static long msPerFrame = 16;
     private static int centerPosX = 960;
     private static int lastBlockCenterX = 960;
+    private static String p1Score, p2Score, p3Score;
 
     private static DataInputStream dip;
     private static DataOutputStream dop;
@@ -123,8 +124,6 @@ public class Game extends Canvas implements Runnable {
         swingBlock.swing();
         swingBlock.fall();
         moveUp();
-
-
     }
 
     public void render() {
@@ -147,6 +146,9 @@ public class Game extends Canvas implements Runnable {
         for (int i = 0; i < blockStack.size(); i++) {
             g.drawImage(blockStack.get(i).getBlockImg(), blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
         }
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+        g.drawString(Integer.toString(score),640,25);
+        g.drawString(Integer.toString(playerLives),1265,25);
 
         bs.show();
         g.dispose();
