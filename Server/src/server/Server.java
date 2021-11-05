@@ -38,7 +38,7 @@ public class Server {
 
                     //New thread is made with a Player constructor, that passes client socket and server name on
                     if (clients < 3){
-                    	new Thread(new Player(clientSocket, "multi server")).start();
+                    	new Thread(new Player(clientSocket, "multi server", clients)).start();
                     }
                     
                 }

@@ -14,10 +14,11 @@ public class Player implements Runnable {
     int playerLives;
     int blockPosition;
 
-    public Player(Socket s, String n) {
+    public Player(Socket s, String n, int id) {
         this.clientSocket = s;
         this.serverName = n;
         //Add player ID to constructor
+        this.playerid = id;
 
     }
     
