@@ -18,7 +18,7 @@ public class Game extends Canvas implements Runnable {
     private static Block swingBlock;
 
 
-    private static BufferedImage background;
+    private static BufferedImage background, blockImg;
     private static int backgroundPosY = -3240;
 
     private boolean running;
@@ -100,6 +100,7 @@ public class Game extends Canvas implements Runnable {
         //put image and sound loading here
         try {
             background = ImageIO.read(new File("res/background.png"));
+            blockImg = ImageIO.read(new File("res/block.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -141,10 +142,10 @@ public class Game extends Canvas implements Runnable {
         //Draw here
         g.drawImage(background, 640, backgroundPosY, null);
 
-        g.drawImage(swingBlock.getBlockImg(), swingBlock.getPosX(), swingBlock.getPosY(), null);
+        g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
 
         for (int i = 0; i < blockStack.size(); i++) {
-            g.drawImage(blockStack.get(i).getBlockImg(), blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
+            g.drawImage(blockImg, blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
         }
         g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
         g.drawString(Integer.toString(score),640,25);
