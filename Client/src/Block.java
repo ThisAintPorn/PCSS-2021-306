@@ -29,15 +29,13 @@ public class Block {
             System.out.println("block posX: " + game.getSwingBlock().getPosX() + ", posY: " + game.getSwingBlock().getPosY());
             posY+= (int) fallSpeed;
             fallSpeed *= fallAcceleration;
-           // if (posX + blockwidth / 2 <= (game.getLastBlockCenterX() + fallMargin) && posX + blockwidth / 2 >= (game.getLastBlockCenterX() - fallMargin)) {
-                //temporary
-            if (posX + (game.getBlockWidth()/2) <= (game.getCenterPosX() + game.getFallMargin()) && posX + (game.getBlockWidth()/2) >= (game.getCenterPosX() - game.getFallMargin())) {
+            if (posX + (game.getBlockWidth()/2) <= (game.getLastBlockCenterX() + game.getFallMargin()) && posX + (game.getBlockWidth()/2) >= (game.getLastBlockCenterX() - game.getFallMargin())) {
 
                 if (posY >= game.getBottomBoundY()) {
                     falling = false;
                     posY=game.getBottomBoundY();
                     game.setBottomBoundY(game.getBottomBoundY()-219);
-                    game.setBlockCenter(posX);
+                    game.setBlockCenter(posX+(game.getBlockWidth()/2));
                     game.addBlockToStack(this);
                     game.hitMarker();
                     fallSpeed=8+ game.getStackHeight();
