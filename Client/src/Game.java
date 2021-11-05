@@ -7,7 +7,9 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game extends Canvas implements Runnable {
 
@@ -29,52 +31,51 @@ public class Game extends Canvas implements Runnable {
     private static long msPerFrame = 16;
     private static int centerPosX = 960;
     private static int lastBlockCenterX = 960;
-    private static String p1Score, p2Score, p3Score;
+    private static Window window;
 
-    private static DataInputStream dip;
-    private static DataOutputStream dop;
-
+    boolean connect = true;
+    boolean firstTimeId = true;
+    int playerId = 0;
+    private int p1score, p2score, p3score, p1lives, p2lives, p3lives;
+    private String ipAddress;
+    private int port;
 
     private KeyManager keyManager;
 
     public Game() {
-        new Window(width, height, gameTitle, this);
+        //new Window(width, height, gameTitle, this);
     }
 
 
     public static void main(String[] args) {
-        /*
-        Scanner input = new Scanner(System.in);
-        boolean connect = true;
-        System.out.println("Enter ip address, for example 192.168.1.1 ");
-        String ipAddress = input.next();
-        System.out.println("The ip address is " + ipAddress);
-        System.out.println("Enter port as an integer, for example 2345");
-        int port = input.nextInt();
-        System.out.println("The port is " + port);
-        input.close();
-        try {
-            //A socket to connect to the server
-            Socket connectToServer = new Socket(ipAddress, port);
-
-            dip = new DataInputStream(connectToServer.getInputStream());
-
-            dop = new DataOutputStream(connectToServer.getOutputStream());
-
-            connectToServer.close();
-        } catch (IOException ex) {
-            System.out.println(ex.toString() + '\n');
-        }
-            */
         Game game = new Game();
+
+
+        //traffic
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Enter ip address for example 192.168.1.1");
+        game.ipAddress = input.next();
+        System.out.println("The ip address is " + game.ipAddress);
+        System.out.println("Enter port as an integer, for example 2345");
+        game.port = input.nextInt();
+        System.out.println("The port is " + game.port);
+        input.close();
+
+        window = new Window(width, height, gameTitle,game);
+
+
         game.initialize();
+        game.traffic(); //creates new thread for traffic
+
+
+
     }
 
     @Override
     public void run() {
         int frames = 0;
         while (running) {
-
 
             tick();
             render();
@@ -110,6 +111,7 @@ public class Game extends Canvas implements Runnable {
         swingBlock = new Block(this);
         blockStack = new ArrayList<Block>();
         this.start();
+        //window.toTop();
         this.requestFocusInWindow();
     }
 
@@ -142,11 +144,13 @@ public class Game extends Canvas implements Runnable {
         //Draw here
         g.drawImage(background, 640, backgroundPosY, null);
 
-        g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
-
         for (int i = 0; i < blockStack.size(); i++) {
             g.drawImage(blockImg, blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
         }
+
+        g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
+
+
         g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
         g.drawString(Integer.toString(score),640,25);
         g.drawString(Integer.toString(playerLives),1265,25);
@@ -203,6 +207,58 @@ public class Game extends Canvas implements Runnable {
         }
 
          */
+    }
+
+    public void traffic(){
+        new Thread(()-> {
+            try {//A socket to connect to the server
+                Socket connectToServer = new Socket(ipAddress, port);
+
+                DataInputStream dip = new DataInputStream(connectToServer.getInputStream());
+
+                DataOutputStream dop = new DataOutputStream(connectToServer.getOutputStream());
+
+                while (connect) {
+
+                    //The first time the connection happens, the client receives the player ID
+                    if (firstTimeId == true) {
+                        playerId = dip.readInt();
+                        firstTimeId = dip.readBoolean();
+                    }
+
+                    //Send score to the server
+                    dop.writeInt(score);
+
+                    //Send lives to the server
+                    dop.writeInt(playerLives);
+
+                    //Block position
+                    //INSERT HERE YO
+
+                    //Receive other players' data from server
+                    if (playerId == 1) {
+                        p2score = dip.readInt();
+                        p2lives = dip.readInt();
+                        p3score = dip.readInt();
+                        p3lives = dip.readInt();
+                    } else if (playerId == 2) {
+                        p1score = dip.readInt();
+                        p1lives = dip.readInt();
+                        p3score = dip.readInt();
+                        p3lives = dip.readInt();
+                    } else if (playerId == 3) {
+                        p1score = dip.readInt();
+                        p1lives = dip.readInt();
+                        p2score = dip.readInt();
+                        p2lives = dip.readInt();
+                    }
+
+                }
+                connectToServer.close();
+            } catch (IOException ex) {
+                System.out.println(ex.toString() + '\n');
+            }
+        }).start();
     }
 
     //getters and setters below

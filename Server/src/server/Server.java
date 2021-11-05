@@ -20,15 +20,6 @@ public class Server {
             Server server = new Server();
         	server.clientThread();
         }).start();
-        
-        System.out.println("p1s " + p1score);
-        System.out.println("p1l " + p1lives);
-        System.out.println("p2s " + p2score);
-        System.out.println("p2l " + p2lives);
-        System.out.println("p3s " + p3score);
-        System.out.println("p3l " + p3lives);
-
-
     }
     
     public void clientThread() {
