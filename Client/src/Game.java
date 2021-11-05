@@ -152,7 +152,7 @@ public class Game extends Canvas implements Runnable {
         }
 
         g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
+        g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 
         if(playerLives>0) {
             g.drawString(Integer.toString(playerLives), 1265, 25);
