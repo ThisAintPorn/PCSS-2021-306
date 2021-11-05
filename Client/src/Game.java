@@ -152,11 +152,40 @@ public class Game extends Canvas implements Runnable {
         }
 
         g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
-
-
         g.setFont(new Font("TimesRoman", Font.PLAIN, 25));
-        g.drawString(Integer.toString(score), 640, 25);
-        g.drawString(Integer.toString(playerLives), 1265, 25);
+
+        if(playerLives>0) {
+            g.drawString(Integer.toString(playerLives), 1265, 25);
+            g.drawString(Integer.toString(score), 640, 25);
+        } else {
+            g.setColor(Color.black);
+            g.fillRect(640,0,640, height);
+            g.setColor(Color.white);
+            g.drawString("u fkn dead m8...",640+blockWidth, (height/2));
+            g.drawString("Your final score was: "+score , 640+fallMargin, (height/2)+30);
+        }
+
+        if(p2lives>0) {
+            g.drawString(Integer.toString(p2lives), 1265, 25);
+            g.drawString(Integer.toString(p2score), 0, 25);
+        } else {
+            g.setColor(Color.black);
+            g.fillRect(0,0,640, height);
+            g.setColor(Color.white);
+            g.drawString("u fkn dead m8...",0+blockWidth, (height/2));
+            g.drawString("Your final score was: "+p2score , 0+fallMargin, (height/2)+30);
+        }
+
+        if(p3lives>0) {
+            g.drawString(Integer.toString(p3lives), 1895, 25);
+            g.drawString(Integer.toString(p3score), 1280, 25);
+        } else {
+            g.setColor(Color.black);
+            g.fillRect(1280,0,640, height);
+            g.setColor(Color.white);
+            g.drawString("u fkn dead m8...",1280+blockWidth, (height/2));
+            g.drawString("Your final score was: "+p3score , 1280+fallMargin, (height/2)+30);
+        }
 
         bs.show();
         g.dispose();
