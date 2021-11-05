@@ -56,6 +56,18 @@
     </task>
     <servers />
   </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-field">
+          <url>file://$PROJECT_DIR$/src/Game.java</url>
+          <line>15</line>
+          <properties field="playerLives" class="Game" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Client$Game.ic" NAME="Game Coverage Results" MODIFIED="1636031188575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>

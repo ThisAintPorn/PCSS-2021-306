@@ -5,10 +5,7 @@ import java.io.IOException;
 
 public class Block {
     private BufferedImage blockImg;
-    private int posX, posY, blockSpawnX = 646, blockSpawnY = 0, blockwidth = 213, fallMargin = 107,
-            bottomBoundY = 512, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
-
-
+    private int posX, posY, blockSpawnX = 646, blockSpawnY = 0;
     private double fallSpeed =8, fallAcceleration = 1.0982;
     private boolean falling, swinging, swingLeft;
     private Game game;
@@ -20,7 +17,7 @@ public class Block {
         this.swinging = true;
         this.game = g;
         try {
-            blockImg = ImageIO.read(new File("res/midtower.png"));
+            blockImg = ImageIO.read(new File("res/block.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -28,16 +25,42 @@ public class Block {
 
     public void fall() {
         if (falling) {
-            posY+= fallSpeed;
+            System.out.println("falling Speed: "+fallSpeed+"Acceleration: "+fallAcceleration);
+            System.out.println("block posX: " + game.getSwingBlock().getPosX() + ", posY: " + game.getSwingBlock().getPosY());
+            posY+= (int) fallSpeed;
             fallSpeed *= fallAcceleration;
-            if (posX + blockwidth / 2 <= (game.getLastBlockCenterX() + fallMargin) && posX + blockwidth / 2 >= (game.getLastBlockCenterX() - fallMargin)) {
+           // if (posX + blockwidth / 2 <= (game.getLastBlockCenterX() + fallMargin) && posX + blockwidth / 2 >= (game.getLastBlockCenterX() - fallMargin)) {
+                //temporary
+            if (posX + (game.getBlockWidth()/2) <= (game.getCenterPosX() + game.getFallMargin()) && posX + (game.getBlockWidth()/2) >= (game.getCenterPosX() - game.getFallMargin())) {
 
-                if (posY >= bottomBoundY) {
+                if (posY >= game.getBottomBoundY()) {
                     falling = false;
-                    posY=bottomBoundY;
+                    posY=game.getBottomBoundY();
+                    game.setBottomBoundY(game.getBottomBoundY()-219);
                     game.setBlockCenter(posX);
                     game.addBlockToStack(this);
                     game.hitMarker();
+                    fallSpeed=8+ game.getStackHeight();
+                    game.setSwingBlock( new Block(game));
+                    game.moveUp();
+                    if(posY<game.getBlockHeight()){
+                        game.setBackgroundPosY(game.getBackgroundPosY()+game.getBlockHeight());
+                        game.setBottomBoundY(game.getBottomBoundY()+game.getBlockHeight());
+                        for (int i = 0; i < game.getBlockStack().size(); i++) {
+                            game.getBlockStack().get(i).setPosY(game.getBlockStack().get(i).getPosY()+game.getBlockHeight());
+                        }
+                    }
+                }
+
+            }
+            else {
+                if (posY>=1080) {
+                    falling=false;
+                    game.missMarker();
+                    posY=0;
+                    fallSpeed=8+ game.getStackHeight();
+                    swinging=true;
+
                 }
             }
         }
@@ -45,19 +68,24 @@ public class Block {
 
     public void swing() {
         if (swinging) {
-            if (posX < rightOpponentBound && !swingLeft) {
-                posX += 1 + game.getStackHeight();
+            if (posX < game.getRightOpponentBound() && !swingLeft) {
+                posX += 2 + game.getStackHeight();
             }
-            if (posX > leftOpponentBound && swingLeft) {
-                posX -= 1 + game.getStackHeight();
+            if (posX > game.getLeftOpponentBound() && swingLeft) {
+                posX -= 2+ game.getStackHeight();
             }
-            if (posX >= rightOpponentBound && !swingLeft) {
+            if (posX >= game.getRightOpponentBound() && !swingLeft) {
                 swingLeft = true;
             }
-            if (posX <= leftOpponentBound && swingLeft) {
+            if (posX <= game.getLeftOpponentBound() && swingLeft) {
                 swingLeft = false;
             }
         }
+    }
+
+    public void moveOneUp(){
+        //posY+=1+game.getStackHeight();
+        posY++;
     }
 
     public void setSwinging(boolean b) {
@@ -68,7 +96,7 @@ public class Block {
         return swinging;
     }
 
-    public void setfalling(boolean b) {
+    public void setFalling(boolean b) {
         this.falling = b;
     }
 
@@ -84,9 +112,19 @@ public class Block {
         return posX;
     }
 
+    public void setPosX(int x) {
+        posX=x;
+    }
+
     public int getPosY() {
         return posY;
     }
+
+    public void setPosY(int y) {
+        posY=y;
+    }
+
+
 
 }
 

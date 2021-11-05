@@ -17,12 +17,10 @@ public class KeyManager implements KeyListener {
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_SPACE && game.getSwingBlock().isSwinging()) {
             game.getSwingBlock().setSwinging(false);
-            game.getSwingBlock().setfalling(true);
-            System.out.println("block should be falling.");
+            game.getSwingBlock().setFalling(true);
         }
         if (e.getKeyCode() == KeyEvent.VK_ENTER && !game.getSwingBlock().isSwinging()) {
             game.getSwingBlock().setSwinging(true);
-            System.out.println("block should be falling.");
         }
     }
 
