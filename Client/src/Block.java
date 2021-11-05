@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 
 public class Block {
-    private BufferedImage blockImg;
     private int posX, posY, blockSpawnX = 646, blockSpawnY = 0;
     private double fallSpeed = 8, fallAcceleration = 1.0982;
     private boolean falling, swinging, swingLeft;
@@ -16,11 +15,6 @@ public class Block {
         this.posY = blockSpawnY;
         this.swinging = true;
         this.game = g;
-        try {
-            blockImg = ImageIO.read(new File("res/block.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 
     public void fall() {
@@ -100,10 +94,6 @@ public class Block {
 
     public boolean isFalling() {
         return falling;
-    }
-
-    public BufferedImage getBlockImg() {
-        return this.blockImg;
     }
 
     public int getPosX() {
