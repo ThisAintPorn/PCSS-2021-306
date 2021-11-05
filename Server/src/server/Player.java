@@ -13,12 +13,14 @@ public class Player implements Runnable {
     int score;
     int playerLives;
     int blockPosition;
+    Server server;
 
-    public Player(Socket s, String n, int id) {
+    public Player(Socket s, String n, int id, Server serv) {
         this.clientSocket = s;
         this.serverName = n;
         //Add player ID to constructor
         this.playerid = id;
+        this.server = serv;
 
     }
     

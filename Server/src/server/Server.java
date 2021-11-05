@@ -10,6 +10,7 @@ public class Server {
 	static int port = 2345;
     double rate, amount;
     int years,clients;
+ 
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -38,7 +39,7 @@ public class Server {
 
                     //New thread is made with a Player constructor, that passes client socket and server name on
                     if (clients < 3){
-                    	new Thread(new Player(clientSocket, "multi server", clients)).start();
+                    	new Thread(new Player(clientSocket, "multi server", clients, this)).start();
                     }
                     
                 }
@@ -51,5 +52,7 @@ public class Server {
             }
 
         }).start();
+        
+       
     }
 }
