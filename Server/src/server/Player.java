@@ -72,13 +72,19 @@ public class Player implements Runnable {
             		}
             		
             	}
-            	
-            	if(playerId == 1 && ) {
+            	//Peter will continue here tomorrow
+            	if(playerId == 1 && server.getP2Send() == true) {
         			
-        		}else if (playerId == 2) {
-        			server.setP2Send(true);
-        		}else if (playerId == 3) {
-        			server.setP3Send(true);
+        		}else if (playerId == 1 && server.getP3Send() == true) {
+        			
+        		}else if (playerId == 2 && server.getP1Send() == true) {
+        			
+        		}else if (playerId == 2 && server.getP3Send() == true) {
+        			
+        		}else if (playerId == 3 && server.getP1Send() == true) {
+        			
+        		}else if (playerId == 3 && server.getP2Send() == true) {
+        			
         		}
             	
             	//Selects player and sets the corresponding lives and score to the one in the object.
