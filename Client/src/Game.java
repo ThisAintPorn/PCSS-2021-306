@@ -67,7 +67,6 @@ public class Game extends Canvas implements Runnable {
             */
         Game game = new Game();
         game.initialize();
-
     }
 
     @Override
@@ -85,14 +84,12 @@ public class Game extends Canvas implements Runnable {
                 System.out.println(e);
             }
 
-
             //FPS counter
             if (System.nanoTime() > lastFPSCheck + 1000000000) {
                 lastFPSCheck = System.nanoTime();
                 long currentFPS = frames;
                 frames = 0;
                 //System.out.println("FPS: " + currentFPS);
-
             }
         }
         stop();
@@ -138,11 +135,11 @@ public class Game extends Canvas implements Runnable {
         }
 
         g = bs.getDrawGraphics();
+
         //Clear
         g.clearRect(0, 0, width, height);
+
         //Draw here
-
-
         g.drawImage(background, 640, backgroundPosY, null);
 
         g.drawImage(swingBlock.getBlockImg(), swingBlock.getPosX(), swingBlock.getPosY(), null);
@@ -153,12 +150,9 @@ public class Game extends Canvas implements Runnable {
 
         bs.show();
         g.dispose();
-        ;
-
     }
 
     public void moveUp() {
-
         //backgroundInitPosY+=1+getStackHeight();
         //bottomBoundY+=1+getStackHeight();
         backgroundPosY++;
@@ -193,6 +187,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void missMarker() {
+        playerLives--;
         System.out.println("Miss");
 
         //lose life
@@ -306,6 +301,4 @@ public class Game extends Canvas implements Runnable {
     public void setBackgroundPosY(int y) {
         backgroundPosY = y;
     }
-
-
 }
