@@ -10,6 +10,10 @@ public class trafic {
 		boolean connect = true;
 		int lastBlockCenterX;
 		int blockPosition;
+		boolean firstTimeId = true;
+		int playerId = 0;
+		int score = 0, playerLives = 3;
+		int p1score, p2score, p3score, p1lives, p2lives, p3lives;
 		System.out.println("Enter ip address for example 192.168.1.1");
 		String ipAddress = input.next();
 		System.out.println("The ip address is " + ipAddress);
@@ -17,6 +21,8 @@ public class trafic {
 		int port = input.nextInt();
 		System.out.println("The port is " + port);
 		input.close();
+		
+		
 		try {
 			//A socket to connect to the server
 			Socket connectToServer = new Socket(ipAddress, port);
@@ -26,39 +32,46 @@ public class trafic {
 			DataOutputStream dop = new DataOutputStream(connectToServer.getOutputStream());
 
 			while (connect) {
-			//Send position of the next block to the server
-
-			//dop.writeInt(lastBlockCenterX);
-
-			//dop.writeInt(blockPosition);
-
-			dop.flush();
-			//Receive crookedness from server? Maybe not?
-			
-			//Get player ID and position the player on screen depending on their player ID
-			int playerid = dip.readInt();
-			//
-			//
-			//After the server calculates the score and remaining lives, send that back to client and display it
-			int score = dip.readInt();
-			int playerLives = dip.readInt();
-			
-			//If the lives run out, game over method executes?
-			if (playerLives <= 0){
-					gameover();
-			}
-			
+				
+				//The first time the connection happens, the client receives the player ID
+				if (firstTimeId == true) {
+					playerId = dip.readInt();
+					firstTimeId = dip.readBoolean();
+				}
+				
+				//Send score to the server
+				dop.writeInt(score);
+				
+				//Send lives to the server
+				dop.writeInt(playerLives);
+				
+				//Block position
+				//INSERT HERE YO
+				
+				//Receive other players' data from server
+				if(playerId == 1) {
+					p2score = dip.readInt();
+					p2lives = dip.readInt();
+					p3score = dip.readInt();
+					p3lives = dip.readInt();
+            	}else if(playerId == 2) {
+            		p1score = dip.readInt();
+					p1lives = dip.readInt();
+					p3score = dip.readInt();
+					p3lives = dip.readInt();
+            	}else if(playerId == 3) {
+            		p1score = dip.readInt();
+					p1lives = dip.readInt();
+					p2score = dip.readInt();
+					p2lives = dip.readInt();
+            	}
+				
 			}
 			connectToServer.close();
 		}
 		catch (IOException ex) {
 		System.out.println(ex.toString() + '\n');
 		}
-	}
-	static void gameover() {
-		//Ends the game for the player?
-		//Display final score on the middle of the screen?
-		//
 	}
 }
 		

@@ -15,6 +15,7 @@ public class Player implements Runnable {
     int blockPosition;
     Server server;
     int p1score, p2score, p3score, p1lives, p2lives, p3lives;
+    boolean firstTimeId = true;
 
     public Player(Socket s, String n, int id, Server serv) {
         this.clientSocket = s;
@@ -37,6 +38,14 @@ public class Player implements Runnable {
             DataOutputStream dop = new DataOutputStream(clientSocket.getOutputStream());
 
             while (connected) {
+            	
+            	//Sends the id of the player to the client the first time the connection happens
+            	if (firstTimeId == true) {
+            		dop.writeInt(playerId);
+            		dop.writeBoolean(false);
+            		firstTimeId = false;
+            	}
+            	
             	//Selects player and sets the corresponding lives and score to the one in the object.
             	playerSelector();
             	
@@ -46,11 +55,29 @@ public class Player implements Runnable {
             	//Receive score from the client
             	score = dip.readInt();
      
-            	//Receive amount of lives back to player
+            	//Receive amount of lives from client
             	playerLives = dip.readInt();
             	
             	//Receive information about where the block landed from client
-            	blockPosition = dip.readInt();
+            	//blockPosition = dip.readInt();
+            	
+            	//Send other players' data to client
+            	if(playerId == 1) {
+            		dop.writeInt(p2score);
+            		dop.writeInt(p2lives);
+            		dop.writeInt(p3score);
+            		dop.writeInt(p3lives);
+            	}else if(playerId == 2) {
+            		dop.writeInt(p1score);
+            		dop.writeInt(p1lives);
+            		dop.writeInt(p3score);
+            		dop.writeInt(p3lives);
+            	}else if(playerId == 3) {
+            		dop.writeInt(p1score);
+            		dop.writeInt(p1lives);
+            		dop.writeInt(p2score);
+            		dop.writeInt(p2lives);
+            	}
             	
             	
             	
