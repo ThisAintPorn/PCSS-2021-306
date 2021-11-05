@@ -10,7 +10,7 @@ public class Server {
 	static int port = 2345;
     double rate, amount;
     int years,clients;
-    int p1score, p2score, p3score, p1lives, p2lives, p3lives;
+    static int p1score, p2score, p3score, p1lives, p2lives, p3lives;
  
 
     public static void main(String[] args) {
@@ -67,12 +67,12 @@ public class Server {
         }
     }
     
-    public void setP1Score(int s) {
-    	this.p1score = s;
+    public static void setP1Score(int s) {
+    	p1score = s;
     }
     
-    public void setP1Lives(int l) {
-    	this.p1lives = l;
+    public static void setP1Lives(int l) {
+    	p1lives = l;
     }
     
     public int getP1Score() {
@@ -83,12 +83,12 @@ public class Server {
     	return p1lives;
     }
     
-    public void setP2Score(int s) {
-    	this.p2score = s;
+    public static void setP2Score(int s) {
+    	p2score = s;
     }
     
-    public void setP2Lives(int l) {
-    	this.p2lives = l;
+    public static void setP2Lives(int l) {
+    	p2lives = l;
     }
     
     public int getP2Score() {
@@ -99,12 +99,12 @@ public class Server {
     	return p2lives;
     }
     
-    public void setP3Score(int s) {
-    	this.p3score = s;
+    public static void setP3Score(int s) {
+    	p3score = s;
     }
     
-    public void setP3Lives(int l) {
-    	this.p3lives = l;
+    public static void setP3Lives(int l) {
+    	p3lives = l;
     }
     
     public int getP3Score() {
