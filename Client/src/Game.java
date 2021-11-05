@@ -101,7 +101,7 @@ public class Game extends Canvas implements Runnable {
     public void initialize() {
         //put image and sound loading here
         try {
-            background = ImageIO.read(new File("res/gameBond.png"));
+            background = ImageIO.read(new File("res/background.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -150,10 +150,6 @@ public class Game extends Canvas implements Runnable {
         for (int i = 0; i < blockStack.size(); i++) {
             g.drawImage(blockStack.get(i).getBlockImg(), blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
         }
-
-        //calibration-line
-        g.setColor(Color.black);
-        g.fillRect(960, 0, 1, 1080);
 
         bs.show();
         g.dispose();
