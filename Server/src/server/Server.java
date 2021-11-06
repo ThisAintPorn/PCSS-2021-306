@@ -28,7 +28,7 @@ public class Server {
               System.out.println("Type start to start the game");
               if (input.next().equals("start")) {
               	startGame = true;
-              	System.out.println("Started");
+              	System.out.println("Started" + startGame);
               }
         }
         input.close();
