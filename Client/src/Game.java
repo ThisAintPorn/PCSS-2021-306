@@ -42,7 +42,7 @@ public class Game extends Canvas implements Runnable {
     boolean connect = true;
     boolean firstTimeId = true;
     int playerId = 0;
-    private int p1score, p2score, p3score, p1lives, p2lives, p3lives;
+    private int p1score, p2score, p3score, p1lives, p2lives, p3lives, leftScore,rightScore,leftLives, rightLives;
     private String ipAddress;
     private int port;
     private boolean sendBool, startGame;
@@ -234,9 +234,9 @@ public class Game extends Canvas implements Runnable {
                 }
 
                 //drawing left players scores and lives
-                if (p2lives > 0) {
-                    g.drawString("Lives: " + Integer.toString(p2lives), 535, 25);
-                    g.drawString("Score: " + Integer.toString(p2score), 0, 25);
+                if (leftLives > 0) {
+                    g.drawString("Lives: " + Integer.toString(leftLives), 535, 25);
+                    g.drawString("Score: " + Integer.toString(leftScore), 0, 25);
                 } else {
                     g.setColor(Color.black);
                     g.fillRect(0, 0, 640, height);
@@ -245,9 +245,9 @@ public class Game extends Canvas implements Runnable {
                     g.drawString("Your final score was: " + p2score, 0 + fallMargin, (height / 2) + 30);
                 }
                 //drawing right players scores and lives
-                if (p3lives > 0) {
-                    g.drawString("Lives: " + Integer.toString(p3lives), 1815, 25);
-                    g.drawString("Score: " + Integer.toString(p3score), 1280, 25);
+                if (rightLives > 0) {
+                    g.drawString("Lives: " + Integer.toString(rightLives), 1815, 25);
+                    g.drawString("Score: " + Integer.toString(rightScore), 1280, 25);
                 } else {
                     g.setColor(Color.black);
                     g.fillRect(1280, 0, 640, height);
@@ -396,16 +396,32 @@ public class Game extends Canvas implements Runnable {
                             p2lives = dip.readInt();
                             p3score = dip.readInt();
                             p3lives = dip.readInt();
+                            //write scores and lives to either left or right depending on ID:
+                            leftScore=p2score;
+                            leftLives=p2lives;
+                            rightLives=p3lives;
+                            rightScore=p3score;
+
                         } else if (playerId == 2) {
                             p1score = dip.readInt();
                             p1lives = dip.readInt();
                             p3score = dip.readInt();
                             p3lives = dip.readInt();
+
+                            leftScore=p1score;
+                            leftLives=p1lives;
+                            rightLives=p3lives;
+                            rightScore=p3score;
                         } else if (playerId == 3) {
                             p1score = dip.readInt();
                             p1lives = dip.readInt();
                             p2score = dip.readInt();
                             p2lives = dip.readInt();
+
+                            leftScore=p1score;
+                            leftLives=p1lives;
+                            rightLives=p2lives;
+                            rightScore=p2score;
                         }
                     	
                     
@@ -420,11 +436,11 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void addToLeftBlockStack(int x) {
-        leftBlockStack.add(new Block(this, leftLastBlockcenterX));
+        leftBlockStack.add(new Block(this, leftLastBlockcenterX-640));
     }
 
     public void addToRightBlockStack(int x) {
-        leftBlockStack.add(new Block(this, rightLastBlockcenterX));
+        leftBlockStack.add(new Block(this, rightLastBlockcenterX+640));
     }
 
     //getters and setters below
