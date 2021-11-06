@@ -52,7 +52,7 @@ public class Player implements Runnable {
             		//Receives other players info about corresponding scores and lives (and probably block positions?)
                 	//playerReceiver();
             		boolean start = true;
-            		while (start) {
+            		if (start) {
             			dop.writeBoolean(true);
             			dop.writeBoolean(false);
             			System.out.println("staaart");

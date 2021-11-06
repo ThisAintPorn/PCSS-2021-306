@@ -24,7 +24,7 @@ public class Server {
         
        
         
-       /* new Thread(() -> {
+       /* 
         	 Scanner input = new Scanner(System.in);
         while (!startGame) {
               System.out.println("Type start to start the game");
@@ -34,7 +34,7 @@ public class Server {
               }
         }
         input.close();
-        }).start();*/
+        */
     }
     
     
