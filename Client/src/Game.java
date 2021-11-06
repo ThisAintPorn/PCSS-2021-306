@@ -29,7 +29,6 @@ public class Game extends Canvas implements Runnable {
             leftloopBackground1PosY = -7560, leftloopBackground2PosY = -3240 - (2 * backgroundHeight),
             rightloopBackground1PosY = -7560, rightloopBackground2PosY = -3240 - (2 * backgroundHeight);
 
-    private Clip ambient, lifeLost, blockStacked;
     private boolean running;
     private Thread thread;
     private BufferStrategy bs;
@@ -396,21 +395,27 @@ public class Game extends Canvas implements Runnable {
                         if(playerId == 1 && blockSendId == 2) {
                 			leftLastBlockcenterX = dip.readInt();
                 			addToLeftBlockStack(leftLastBlockcenterX);
+                            moveUpLeft();
                 		}else if (playerId == 1 && blockSendId == 3) {
                 			rightLastBlockcenterX = dip.readInt();
                 			addToRightBlockStack(rightLastBlockcenterX);
+                            moveUpRight();
                 		}else if (playerId == 2 && blockSendId == 1) {
                 			leftLastBlockcenterX = dip.readInt();
                 			addToLeftBlockStack(leftLastBlockcenterX);
+                            moveUpLeft();
                 		}else if (playerId == 2 && blockSendId == 3) {
                 			rightLastBlockcenterX = dip.readInt();
                 			addToRightBlockStack(rightLastBlockcenterX);
+                            moveUpRight();
                 		}else if (playerId == 3 && blockSendId == 1) {
                 			leftLastBlockcenterX = dip.readInt();
                 			addToLeftBlockStack(leftLastBlockcenterX);
+                            moveUpLeft();
                 		}else if (playerId == 3 && blockSendId == 2) {
                 			rightLastBlockcenterX = dip.readInt();
                 			addToRightBlockStack(rightLastBlockcenterX);
+                            moveUpRight();
                 		}else {
                 			
                 		}
