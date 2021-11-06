@@ -119,7 +119,7 @@ public class Game extends Canvas implements Runnable {
         blockStack = new ArrayList<Block>();
         this.start();
         //window.toTop();
-        gameState = "WaitingForPlayers";
+        gameState = "waitingForPlayers";
         this.requestFocusInWindow();
     }
 
@@ -150,100 +150,111 @@ public class Game extends Canvas implements Runnable {
         g.clearRect(0, 0, width, height);
 
         //Draw here
-        //Initial backround for left opponent
-        g.drawImage(background, 0, leftBackgroundY, null);
-        //background for center player
-        g.drawImage(background, 640, backgroundPosY, null);
-        //background for right opponent
-        g.drawImage(background, 1280, rightBackgroundY, null);
+        switch (gameState) {
+            case "waitingForPlayers":
+                // draw waiting screen and game title
+                break;
+            case "playing":
+                //Initial backround for left opponent
+                g.drawImage(background, 0, leftBackgroundY, null);
+                //background for center player
+                g.drawImage(background, 640, backgroundPosY, null);
+                //background for right opponent
+                g.drawImage(background, 1280, rightBackgroundY, null);
 
-        //looping backgrounds for center player
-        g.drawImage(loopbackground, 640, loopBackground1PosY, null);
-        if (loopBackground1PosY > 1080) {
-            loopBackground1PosY -= 2 * backgroundHeight;
-        }
-        g.drawImage(loopbackground, 640, loopBackground2PosY, null);
-        if (loopBackground2PosY > 1080) {
-            loopBackground2PosY -= 2 * backgroundHeight;
-        }
+                //looping backgrounds for center player
+                g.drawImage(loopbackground, 640, loopBackground1PosY, null);
+                if (loopBackground1PosY > 1080) {
+                    loopBackground1PosY -= 2 * backgroundHeight;
+                }
+                g.drawImage(loopbackground, 640, loopBackground2PosY, null);
+                if (loopBackground2PosY > 1080) {
+                    loopBackground2PosY -= 2 * backgroundHeight;
+                }
 
-        //looping backgrounds for left player
-        g.drawImage(loopbackground, 640, leftloopBackground1PosY, null);
-        if (leftloopBackground1PosY > 1080) {
-            leftloopBackground1PosY -= 2 * backgroundHeight;
-        }
-        g.drawImage(loopbackground, 640, leftloopBackground2PosY, null);
-        if (leftloopBackground2PosY > 1080) {
-            leftloopBackground2PosY -= 2 * backgroundHeight;
-        }
+                //looping backgrounds for left player
+                g.drawImage(loopbackground, 640, leftloopBackground1PosY, null);
+                if (leftloopBackground1PosY > 1080) {
+                    leftloopBackground1PosY -= 2 * backgroundHeight;
+                }
+                g.drawImage(loopbackground, 640, leftloopBackground2PosY, null);
+                if (leftloopBackground2PosY > 1080) {
+                    leftloopBackground2PosY -= 2 * backgroundHeight;
+                }
 
-        //looping backgrounds for right player
-        g.drawImage(loopbackground, 640, rightloopBackground1PosY, null);
-        if (rightloopBackground1PosY > 1080) {
-            rightloopBackground1PosY -= 2 * backgroundHeight;
-        }
-        g.drawImage(loopbackground, 640, rightloopBackground2PosY, null);
-        if (rightloopBackground2PosY > 1080) {
-            rightloopBackground2PosY -= 2 * backgroundHeight;
-        }
+                //looping backgrounds for right player
+                g.drawImage(loopbackground, 640, rightloopBackground1PosY, null);
+                if (rightloopBackground1PosY > 1080) {
+                    rightloopBackground1PosY -= 2 * backgroundHeight;
+                }
+                g.drawImage(loopbackground, 640, rightloopBackground2PosY, null);
+                if (rightloopBackground2PosY > 1080) {
+                    rightloopBackground2PosY -= 2 * backgroundHeight;
+                }
 
-            //Drawing center players blockstack
-        for (int i = 0; i < blockStack.size(); i++) {
-            g.drawImage(blockImg, blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
-        }
+                //Drawing center players blockstack
+                for (int i = 0; i < blockStack.size(); i++) {
+                    g.drawImage(blockImg, blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
+                }
+/*
+                //Drawing left players blockstack
+                for (int i = 0; i < leftBlockStack.size(); i++) {
+                    g.drawImage(blockImg, leftBlockStack.get(i).getPosX(), leftBlockStack.get(i).getPosY(), null);
+                }
 
-        //Drawing left players blockstack
-        for (int i = 0; i < leftBlockStack.size(); i++) {
-            g.drawImage(blockImg, leftBlockStack.get(i).getPosX(), leftBlockStack.get(i).getPosY(), null);
-        }
+                //Drawing right players blockstack
+                for (int i = 0; i < rightBlockStack.size(); i++) {
+                    g.drawImage(blockImg, rightBlockStack.get(i).getPosX(), rightBlockStack.get(i).getPosY(), null);
+                }
 
-        //Drawing right players blockstack
-        for (int i = 0; i < rightBlockStack.size(); i++) {
-            g.drawImage(blockImg, rightBlockStack.get(i).getPosX(), rightBlockStack.get(i).getPosY(), null);
-        }
-            //Drawing swinging block
-        g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
-        g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+ */
+                //Drawing swinging block
+                g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
+                g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
 
-            //Drawing center players scores and lives
-        if (playerLives > 0) {
-            g.drawString("Lives: "+Integer.toString(playerLives), 1175, 25);
-            g.drawString("Score: "+Integer.toString(score), 640, 25);
-        } else {
-            g.setColor(Color.black);
-            g.fillRect(640, 0, 640, height);
-            g.setColor(Color.white);
-            g.drawString("u fkn dead m8...", 640 + blockWidth, (height / 2));
-            g.drawString("Your final score was: " + score, 640 + fallMargin, (height / 2) + 30);
-        }
+                //Drawing center players scores and lives
+                if (playerLives > 0) {
+                    g.drawString("Lives: " + Integer.toString(playerLives), 1175, 25);
+                    g.drawString("Score: " + Integer.toString(score), 640, 25);
+                } else {
+                    g.setColor(Color.black);
+                    g.fillRect(640, 0, 640, height);
+                    g.setColor(Color.white);
+                    g.drawString("u fkn dead m8...", 640 + blockWidth, (height / 2));
+                    g.drawString("Your final score was: " + score, 640 + fallMargin, (height / 2) + 30);
+                }
 
-            //drawing left players scores and lives
-        if (p2lives > 0) {
-            g.drawString("Lives: "+Integer.toString(p2lives), 535, 25);
-            g.drawString("Score: "+Integer.toString(p2score), 0, 25);
-        } else {
-            g.setColor(Color.black);
-            g.fillRect(0, 0, 640, height);
-            g.setColor(Color.white);
-            g.drawString("u fkn dead m8...", 0 + blockWidth, (height / 2));
-            g.drawString("Your final score was: " + p2score, 0 + fallMargin, (height / 2) + 30);
-        }
-            //drawing right players scores and lives
-        if (p3lives > 0) {
-            g.drawString("Lives: "+Integer.toString(p3lives), 1815, 25);
-            g.drawString("Score: "+Integer.toString(p3score), 1280, 25);
-        } else {
-            g.setColor(Color.black);
-            g.fillRect(1280, 0, 640, height);
-            g.setColor(Color.white);
-            g.drawString("u fkn dead m8...", 1280 + blockWidth, (height / 2));
-            g.drawString("Your final score was: " + p3score, 1280 + fallMargin, (height / 2) + 30);
-        }
+                //drawing left players scores and lives
+                if (p2lives > 0) {
+                    g.drawString("Lives: " + Integer.toString(p2lives), 535, 25);
+                    g.drawString("Score: " + Integer.toString(p2score), 0, 25);
+                } else {
+                    g.setColor(Color.black);
+                    g.fillRect(0, 0, 640, height);
+                    g.setColor(Color.white);
+                    g.drawString("u fkn dead m8...", 0 + blockWidth, (height / 2));
+                    g.drawString("Your final score was: " + p2score, 0 + fallMargin, (height / 2) + 30);
+                }
+                //drawing right players scores and lives
+                if (p3lives > 0) {
+                    g.drawString("Lives: " + Integer.toString(p3lives), 1815, 25);
+                    g.drawString("Score: " + Integer.toString(p3score), 1280, 25);
+                } else {
+                    g.setColor(Color.black);
+                    g.fillRect(1280, 0, 640, height);
+                    g.setColor(Color.white);
+                    g.drawString("u fkn dead m8...", 1280 + blockWidth, (height / 2));
+                    g.drawString("Your final score was: " + p3score, 1280 + fallMargin, (height / 2) + 30);
+                }
+                break;
 
-        bs.show();
-        g.dispose();
+        }
+            bs.show();
+            g.dispose();
+
     }
-        //moves up blocks and background continuously
+
+    //moves up blocks and background continuously
     public void moveUp() {
         backgroundPosY++;
         bottomBoundY++;
@@ -260,7 +271,8 @@ public class Game extends Canvas implements Runnable {
         }*/
 
     }
-        //moves up left players blocks and backgrounds 1 block at a time
+
+    //moves up left players blocks and backgrounds 1 block at a time
     public void moveUpLeft() {
         leftBackgroundY += blockHeight;
         leftloopBackground1PosY += blockHeight;
@@ -269,7 +281,8 @@ public class Game extends Canvas implements Runnable {
             leftBlockStack.get(i).setPosY(getY() + blockHeight);
         }
     }
-        //moves up right players blocks and backgrounds 1 block at a time
+
+    //moves up right players blocks and backgrounds 1 block at a time
     public void moveUpRight() {
         rightBackgroundY += blockHeight;
         rightloopBackground1PosY += blockHeight;
@@ -522,5 +535,12 @@ public class Game extends Canvas implements Runnable {
 
     public int getEnemyBottomBounds() {
         return enemyBottomBounds;
+    }
+
+    public static String getGameState() {
+        return gameState;
+    }
+    public void setGameState(String s){
+        gameState = s;
     }
 }
