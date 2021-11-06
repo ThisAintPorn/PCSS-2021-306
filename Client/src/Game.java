@@ -209,7 +209,7 @@ public class Game extends Canvas implements Runnable {
                 for (int i = 0; i < blockStack.size(); i++) {
                     g.drawImage(blockImg, blockStack.get(i).getPosX(), blockStack.get(i).getPosY(), null);
                 }
-/*
+
                 //Drawing left players blockstack
                 for (int i = 0; i < leftBlockStack.size(); i++) {
                     g.drawImage(blockImg, leftBlockStack.get(i).getPosX(), leftBlockStack.get(i).getPosY(), null);
@@ -220,7 +220,7 @@ public class Game extends Canvas implements Runnable {
                     g.drawImage(blockImg, rightBlockStack.get(i).getPosX(), rightBlockStack.get(i).getPosY(), null);
                 }
 
- */
+ 
                 //Drawing swinging block
                 g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
                 g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
@@ -276,12 +276,7 @@ public class Game extends Canvas implements Runnable {
         for (int i = 0; i < blockStack.size(); i++) {
             blockStack.get(i).moveOneUp();
         }
-       /* for (int i = 0; i < leftBlockStack.size(); i++) {
-            leftBlockStack.get(i).moveOneUp();
-        }
-        for (int i = 0; i < rightBlockStack.size(); i++) {
-            rightBlockStack.get(i).moveOneUp();
-        }*/
+
 
     }
 
