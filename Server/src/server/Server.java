@@ -5,13 +5,14 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
+import java.util.Scanner;
 
 public class Server {
 	static int port = 2345;
     double rate, amount;
     int years,clients;
     static int p1score, p2score, p3score, p1lives, p2lives, p3lives, p1LastBlock, p2LastBlock, p3LastBlock; 
-    static boolean p1send, p2send, p3send;
+    static boolean p1send, p2send, p3send, startGame = false;
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -20,7 +21,20 @@ public class Server {
             Server server = new Server();
         	server.clientThread();
         }).start();
+        
+        Scanner input = new Scanner(System.in);
+        
+        while (!startGame) {
+              System.out.println("Type start to start the game");
+              if (input.next().equals("start")) {
+              	startGame = true;
+              }
+        }
+        input.close();
+      
     }
+    
+    
     
     public void clientThread() {
     	try {
@@ -152,5 +166,9 @@ public class Server {
     
     public boolean getP3Send() {
     	return p3send;
+    }
+    
+    public boolean getStartGame() {
+    	return startGame;
     }
 }

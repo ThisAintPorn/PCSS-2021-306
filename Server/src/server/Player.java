@@ -42,92 +42,97 @@ public class Player implements Runnable {
             while (connected) {
             	
             	//Sends the id of the player to the client the first time the connection happens
-            	if (firstTimeId == true) {
+            	if (firstTimeId) {
             		dop.writeInt(playerId);
             		dop.writeBoolean(false);
             		firstTimeId = false;
             	}
             	
-            	
-            	//Receives other players info about corresponding scores and lives (and probably block positions?)
-            	//playerReceiver();
-
-            	//Receive score from the client
-            	score = dip.readInt();
-     
-            	//Receive amount of lives from client
-            	playerLives = dip.readInt();
-            	
-            	//Receive block position
-            	receiveBool = dip.readBoolean();
-            	if(receiveBool) {
-            		lastBlockPos = dip.readInt();
-            		receiveBool = false;
-            		if(playerId == 1) {
-            			server.setP1Send(true);
-            		}else if (playerId == 2) {
-            			server.setP2Send(true);
-            		}else if (playerId == 3) {
-            			server.setP3Send(true);
+            	while (server.getStartGame()) {
+            		//Receives other players info about corresponding scores and lives (and probably block positions?)
+                	//playerReceiver();
+            		boolean start = true;
+            		while (start) {
+            			dop.writeBoolean(server.getStartGame());
+            			dop.writeBoolean(false);
+            			start = false;
             		}
             		
-            	}
-            	//Peter will continue here tomorrow
-            	if(playerId == 1 && server.getP2Send() == true) {
-        			
-        		}else if (playerId == 1 && server.getP3Send() == true) {
-        			
-        		}else if (playerId == 2 && server.getP1Send() == true) {
-        			
-        		}else if (playerId == 2 && server.getP3Send() == true) {
-        			
-        		}else if (playerId == 3 && server.getP1Send() == true) {
-        			
-        		}else if (playerId == 3 && server.getP2Send() == true) {
-        			
-        		}
-            	
-            	//Selects player and sets the corresponding lives and score to the one in the object.
-            	playerSelector();
-            	
-            	
-            	
-            	//Send block position
-            	/*if (putBlock) {
-            		if(playerId == 1) {
-                		dop.writeInt(server.getP2LastBlock());
-                		dop.writeInt(server.getP3LastBlock());
-                	}else if(playerId == 2) {
-                		dop.writeInt(server.getP1LastBlock());
-                		dop.writeInt(server.getP3LastBlock());
-                	}else if(playerId == 3) {
-                		dop.writeInt(server.getP1LastBlock());
-                		dop.writeInt(server.getP2LastBlock());
+                	//Receive score from the client
+                	score = dip.readInt();
+         
+                	//Receive amount of lives from client
+                	playerLives = dip.readInt();
+                	
+                	//Receive block position
+                	receiveBool = dip.readBoolean();
+                	if(receiveBool) {
+                		lastBlockPos = dip.readInt();
+                		receiveBool = false;
+                		if(playerId == 1) {
+                			server.setP1Send(true);
+                		}else if (playerId == 2) {
+                			server.setP2Send(true);
+                		}else if (playerId == 3) {
+                			server.setP3Send(true);
+                		}
+                		
                 	}
-            	}*/
-            	
-            	
-            	//Send other players' data to client
-            	if(playerId == 1) {
-            		dop.writeInt(server.getP2Score());
-            		dop.writeInt(server.getP2Lives());
-            		dop.writeInt(server.getP3Score());
-            		dop.writeInt(server.getP3Lives());
-            	}else if(playerId == 2) {
-            		dop.writeInt(server.getP1Score());
-            		dop.writeInt(server.getP1Lives());
-            		dop.writeInt(server.getP3Score());
-            		dop.writeInt(server.getP3Lives());
-            	}else if(playerId == 3) {
-            		dop.writeInt(server.getP1Score());
-            		dop.writeInt(server.getP1Lives());
-            		dop.writeInt(server.getP2Score());
-            		dop.writeInt(server.getP2Lives());
+                	//Send block position
+                	if(playerId == 1 && server.getP2Send() == true) {
+            			
+            		}else if (playerId == 1 && server.getP3Send() == true) {
+            			
+            		}else if (playerId == 2 && server.getP1Send() == true) {
+            			
+            		}else if (playerId == 2 && server.getP3Send() == true) {
+            			
+            		}else if (playerId == 3 && server.getP1Send() == true) {
+            			
+            		}else if (playerId == 3 && server.getP2Send() == true) {
+            			
+            		}else {
+            			dop.writeInt(0);
+            		}
+                	
+                	//Selects player and sets the corresponding lives and score to the one in the object.
+                	playerSelector();
+                	
+                	
+                	
+                	//Send block position
+                	/*if (putBlock) {
+                		if(playerId == 1) {
+                    		dop.writeInt(server.getP2LastBlock());
+                    		dop.writeInt(server.getP3LastBlock());
+                    	}else if(playerId == 2) {
+                    		dop.writeInt(server.getP1LastBlock());
+                    		dop.writeInt(server.getP3LastBlock());
+                    	}else if(playerId == 3) {
+                    		dop.writeInt(server.getP1LastBlock());
+                    		dop.writeInt(server.getP2LastBlock());
+                    	}
+                	}*/
+                	
+                	
+                	//Send other players' data to client
+                	if(playerId == 1) {
+                		dop.writeInt(server.getP2Score());
+                		dop.writeInt(server.getP2Lives());
+                		dop.writeInt(server.getP3Score());
+                		dop.writeInt(server.getP3Lives());
+                	}else if(playerId == 2) {
+                		dop.writeInt(server.getP1Score());
+                		dop.writeInt(server.getP1Lives());
+                		dop.writeInt(server.getP3Score());
+                		dop.writeInt(server.getP3Lives());
+                	}else if(playerId == 3) {
+                		dop.writeInt(server.getP1Score());
+                		dop.writeInt(server.getP1Lives());
+                		dop.writeInt(server.getP2Score());
+                		dop.writeInt(server.getP2Lives());
+                	}
             	}
-            	
-            	
-            	
-               
             }
         } catch (IOException e) {
             e.printStackTrace();
