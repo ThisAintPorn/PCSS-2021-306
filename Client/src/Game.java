@@ -22,7 +22,7 @@ public class Game extends Canvas implements Runnable {
     private static String gameState;
 
 
-    private static BufferedImage background, blockImg, loopbackground;
+    private static BufferedImage background, blockImg, loopbackground, waitingScreen;
     private static int backgroundPosY = -3240, leftBackgroundY = -3240, rightBackgroundY = -3240,
             loopBackground1PosY = -7560, loopBackground2PosY = -3240 - (2 * backgroundHeight),
             leftloopBackground1PosY = -7560, leftloopBackground2PosY = -3240 - (2 * backgroundHeight),
@@ -42,7 +42,7 @@ public class Game extends Canvas implements Runnable {
     boolean connect = true;
     boolean firstTimeId = true;
     int playerId = 0;
-    private int p1score, p2score, p3score, p1lives, p2lives, p3lives, leftScore,rightScore,leftLives, rightLives;
+    private int p1score, p2score, p3score, p1lives, p2lives, p3lives, leftScore, rightScore, leftLives, rightLives;
     private String ipAddress;
     private int port;
     private boolean sendBool, startGame;
@@ -110,6 +110,7 @@ public class Game extends Canvas implements Runnable {
             background = ImageIO.read(new File("res/background.png"));
             blockImg = ImageIO.read(new File("res/block.png"));
             loopbackground = ImageIO.read(new File("res/loopbackground.png"));
+            waitingScreen = ImageIO.read(new File("res/waitingscreen.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -162,7 +163,9 @@ public class Game extends Canvas implements Runnable {
         //Draw here
         switch (gameState) {
             case "waitingForPlayers":
-                // draw waiting screen and game title
+                // draw waiting screen
+                g.drawImage(waitingScreen, 0, 0, null);
+
                 break;
             case "playing":
                 //Initial backround for left opponent
@@ -259,8 +262,8 @@ public class Game extends Canvas implements Runnable {
                 break;
 
         }
-            bs.show();
-            g.dispose();
+        bs.show();
+        g.dispose();
 
     }
 
@@ -358,15 +361,17 @@ public class Game extends Canvas implements Runnable {
                         playerId = dip.readInt();
                         System.out.println("Player id is: " + playerId);
                         firstTimeId = false;
-                        		//dip.readBoolean();
+                        //dip.readBoolean();
                     }
 
                     
                     if (waitForStart) {
-                    	startGame = dip.readBoolean();
-                    	System.out.println("Game started: " + startGame);
-                    	waitForStart = dip.readBoolean();
+                        startGame = dip.readBoolean();
+                        System.out.println("Game started: " + startGame);
+                        waitForStart = dip.readBoolean();
                     }
+
+
                    
 
                          gameState = "playing";
@@ -447,7 +452,7 @@ public class Game extends Canvas implements Runnable {
                             rightScore=p2score;
                         }
                     	
-                    
+                 
 
 
                 }
@@ -459,11 +464,13 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void addToLeftBlockStack(int x) {
-        leftBlockStack.add(new Block(this, leftLastBlockcenterX-640));
+        //x should be leftLastBlockcenterX
+        leftBlockStack.add(new Block(this, x - 640));
     }
 
     public void addToRightBlockStack(int x) {
-        leftBlockStack.add(new Block(this, rightLastBlockcenterX+640));
+        //x should be rightLastBlockcenterX
+        leftBlockStack.add(new Block(this, x + 640));
     }
 
     //getters and setters below
@@ -594,7 +601,8 @@ public class Game extends Canvas implements Runnable {
     public static String getGameState() {
         return gameState;
     }
-    public void setGameState(String s){
+
+    public void setGameState(String s) {
         gameState = s;
     }
 }
