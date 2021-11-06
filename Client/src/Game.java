@@ -233,8 +233,8 @@ public class Game extends Canvas implements Runnable {
                     g.setColor(Color.black);
                     g.fillRect(640, 0, 640, height);
                     g.setColor(Color.white);
-                    g.drawString("u fkn dead m8...", 640 + blockWidth, (height / 2));
-                    g.drawString("Your final score was: " + score, 640 + fallMargin, (height / 2) + 30);
+                    g.drawString("YOU LOST", 640 + blockWidth, (height / 2));
+                    g.drawString("      Your final score was: " + score, 640 + fallMargin, (height / 2) + 30);
                 }
 
                 //drawing left players scores and lives
@@ -245,8 +245,8 @@ public class Game extends Canvas implements Runnable {
                     g.setColor(Color.black);
                     g.fillRect(0, 0, 640, height);
                     g.setColor(Color.white);
-                    g.drawString("u fkn dead m8...", 0 + blockWidth, (height / 2));
-                    g.drawString("Your final score was: " + p2score, 0 + fallMargin, (height / 2) + 30);
+                    g.drawString("YOU LOST", 0 + blockWidth, (height / 2));
+                    g.drawString("      Your final score was: " + p2score, 0 + fallMargin, (height / 2) + 30);
                 }
                 //drawing right players scores and lives
                 if (rightLives > 0) {
@@ -256,8 +256,8 @@ public class Game extends Canvas implements Runnable {
                     g.setColor(Color.black);
                     g.fillRect(1280, 0, 640, height);
                     g.setColor(Color.white);
-                    g.drawString("u fkn dead m8...", 1280 + blockWidth, (height / 2));
-                    g.drawString("Your final score was: " + p3score, 1280 + fallMargin, (height / 2) + 30);
+                    g.drawString("YOU LOST", 1280 + blockWidth, (height / 2));
+                    g.drawString("      Your final score was: " + p3score, 1280 + fallMargin, (height / 2) + 30);
                 }
                 break;
 
