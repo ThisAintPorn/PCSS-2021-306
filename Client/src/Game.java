@@ -186,21 +186,21 @@ public class Game extends Canvas implements Runnable {
                 }
 
                 //looping backgrounds for left player
-                g.drawImage(loopbackground, 640, leftloopBackground1PosY, null);
+                g.drawImage(loopbackground, 0, leftloopBackground1PosY, null);
                 if (leftloopBackground1PosY > 1080) {
                     leftloopBackground1PosY -= 2 * backgroundHeight;
                 }
-                g.drawImage(loopbackground, 640, leftloopBackground2PosY, null);
+                g.drawImage(loopbackground, 0, leftloopBackground2PosY, null);
                 if (leftloopBackground2PosY > 1080) {
                     leftloopBackground2PosY -= 2 * backgroundHeight;
                 }
 
                 //looping backgrounds for right player
-                g.drawImage(loopbackground, 640, rightloopBackground1PosY, null);
+                g.drawImage(loopbackground, 1280, rightloopBackground1PosY, null);
                 if (rightloopBackground1PosY > 1080) {
                     rightloopBackground1PosY -= 2 * backgroundHeight;
                 }
-                g.drawImage(loopbackground, 640, rightloopBackground2PosY, null);
+                g.drawImage(loopbackground, 1280, rightloopBackground2PosY, null);
                 if (rightloopBackground2PosY > 1080) {
                     rightloopBackground2PosY -= 2 * backgroundHeight;
                 }
@@ -220,7 +220,7 @@ public class Game extends Canvas implements Runnable {
                     g.drawImage(blockImg, rightBlockStack.get(i).getPosX(), rightBlockStack.get(i).getPosY(), null);
                 }
 
- 
+
                 //Drawing swinging block
                 g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
                 g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
@@ -359,7 +359,7 @@ public class Game extends Canvas implements Runnable {
                         //dip.readBoolean();
                     }
 
-                    
+
                     if (waitForStart) {
                         startGame = dip.readBoolean();
                         System.out.println("Game started: " + startGame);
@@ -367,92 +367,90 @@ public class Game extends Canvas implements Runnable {
                     }
 
 
-                   
+                    gameState = "playing";
 
-                         gameState = "playing";
+                    //Send score to the server
+                    dop.writeInt(score);
 
-                        //Send score to the server
-                        dop.writeInt(score);
-
-                        //Send lives to the server
-                        dop.writeInt(playerLives);
+                    //Send lives to the server
+                    dop.writeInt(playerLives);
 
 
-                        //Send block position
-                        if (sendBool) {
-                            dop.writeBoolean(true);
-                            dop.writeInt(lastBlockCenterX);
-                            sendBool = false;
-                        } else {
-                            dop.writeBoolean(false);
-                        }
-                        
-                        dop.flush();
-                        
-                        //Receive block position
-                        int blockSendId = 0;
-                        blockSendId = dip.readInt();
-                        if(playerId == 1 && blockSendId == 2) {
-                			leftLastBlockcenterX = dip.readInt();
-                			addToLeftBlockStack(leftLastBlockcenterX);
-                            moveUpLeft();
-                		}else if (playerId == 1 && blockSendId == 3) {
-                			rightLastBlockcenterX = dip.readInt();
-                			addToRightBlockStack(rightLastBlockcenterX);
-                            moveUpRight();
-                		}else if (playerId == 2 && blockSendId == 1) {
-                			leftLastBlockcenterX = dip.readInt();
-                			addToLeftBlockStack(leftLastBlockcenterX);
-                            moveUpLeft();
-                		}else if (playerId == 2 && blockSendId == 3) {
-                			rightLastBlockcenterX = dip.readInt();
-                			addToRightBlockStack(rightLastBlockcenterX);
-                            moveUpRight();
-                		}else if (playerId == 3 && blockSendId == 1) {
-                			leftLastBlockcenterX = dip.readInt();
-                			addToLeftBlockStack(leftLastBlockcenterX);
-                            moveUpLeft();
-                		}else if (playerId == 3 && blockSendId == 2) {
-                			rightLastBlockcenterX = dip.readInt();
-                			addToRightBlockStack(rightLastBlockcenterX);
-                            moveUpRight();
-                		}else {
-                			
-                		}
+                    //Send block position
+                    if (sendBool) {
+                        dop.writeBoolean(true);
+                        dop.writeInt(lastBlockCenterX);
+                        sendBool = false;
+                    } else {
+                        dop.writeBoolean(false);
+                    }
 
-                        //Receive other players' data from server
-                        if (playerId == 1) {
-                            p2score = dip.readInt();
-                            p2lives = dip.readInt();
-                            p3score = dip.readInt();
-                            p3lives = dip.readInt();
-                            //write scores and lives to either left or right depending on ID:
-                            leftScore=p2score;
-                            leftLives=p2lives;
-                            rightLives=p3lives;
-                            rightScore=p3score;
+                    dop.flush();
 
-                        } else if (playerId == 2) {
-                            p1score = dip.readInt();
-                            p1lives = dip.readInt();
-                            p3score = dip.readInt();
-                            p3lives = dip.readInt();
+                    //Receive block position
+                    int blockSendId = 0;
+                    blockSendId = dip.readInt();
+                    if (playerId == 1 && blockSendId == 2) {
+                        leftLastBlockcenterX = dip.readInt();
+                        addToLeftBlockStack(leftLastBlockcenterX);
+                        moveUpLeft();
+                    } else if (playerId == 1 && blockSendId == 3) {
+                        rightLastBlockcenterX = dip.readInt();
+                        addToRightBlockStack(rightLastBlockcenterX);
+                        moveUpRight();
+                    } else if (playerId == 2 && blockSendId == 1) {
+                        leftLastBlockcenterX = dip.readInt();
+                        addToLeftBlockStack(leftLastBlockcenterX);
+                        moveUpLeft();
+                    } else if (playerId == 2 && blockSendId == 3) {
+                        rightLastBlockcenterX = dip.readInt();
+                        addToRightBlockStack(rightLastBlockcenterX);
+                        moveUpRight();
+                    } else if (playerId == 3 && blockSendId == 1) {
+                        leftLastBlockcenterX = dip.readInt();
+                        addToLeftBlockStack(leftLastBlockcenterX);
+                        moveUpLeft();
+                    } else if (playerId == 3 && blockSendId == 2) {
+                        rightLastBlockcenterX = dip.readInt();
+                        addToRightBlockStack(rightLastBlockcenterX);
+                        moveUpRight();
+                    } else {
 
-                            leftScore=p1score;
-                            leftLives=p1lives;
-                            rightLives=p3lives;
-                            rightScore=p3score;
-                        } else if (playerId == 3) {
-                            p1score = dip.readInt();
-                            p1lives = dip.readInt();
-                            p2score = dip.readInt();
-                            p2lives = dip.readInt();
+                    }
 
-                            leftScore=p1score;
-                            leftLives=p1lives;
-                            rightLives=p2lives;
-                            rightScore=p2score;
-                        }
+                    //Receive other players' data from server
+                    if (playerId == 1) {
+                        p2score = dip.readInt();
+                        p2lives = dip.readInt();
+                        p3score = dip.readInt();
+                        p3lives = dip.readInt();
+                        //write scores and lives to either left or right depending on ID:
+                        leftScore = p2score;
+                        leftLives = p2lives;
+                        rightLives = p3lives;
+                        rightScore = p3score;
+
+                    } else if (playerId == 2) {
+                        p1score = dip.readInt();
+                        p1lives = dip.readInt();
+                        p3score = dip.readInt();
+                        p3lives = dip.readInt();
+
+                        leftScore = p1score;
+                        leftLives = p1lives;
+                        rightLives = p3lives;
+                        rightScore = p3score;
+                    } else if (playerId == 3) {
+                        p1score = dip.readInt();
+                        p1lives = dip.readInt();
+                        p2score = dip.readInt();
+                        p2lives = dip.readInt();
+
+                        leftScore = p1score;
+                        leftLives = p1lives;
+                        rightLives = p2lives;
+                        rightScore = p2score;
+                    }
                 }
                 connectToServer.close();
             } catch (IOException ex) {
@@ -463,12 +461,12 @@ public class Game extends Canvas implements Runnable {
 
     public void addToLeftBlockStack(int x) {
         //x should be leftLastBlockcenterX
-        leftBlockStack.add(new Block(this, x - 640));
+        leftBlockStack.add(new Block(this, x - 640 - 107));
     }
 
     public void addToRightBlockStack(int x) {
         //x should be rightLastBlockcenterX
-        leftBlockStack.add(new Block(this, x + 640));
+        leftBlockStack.add(new Block(this, x + 640 - 107));
     }
 
     //getters and setters below
