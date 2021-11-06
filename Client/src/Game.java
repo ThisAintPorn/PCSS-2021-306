@@ -364,7 +364,7 @@ public class Game extends Canvas implements Runnable {
                     	waitForStart = dip.readBoolean();
                     }
                     while(startGame) {
-                        System.out.println("yo");
+
                          gameState = "playing";
 
                         //Send score to the server

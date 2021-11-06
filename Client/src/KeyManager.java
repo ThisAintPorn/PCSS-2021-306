@@ -18,7 +18,6 @@ public class KeyManager implements KeyListener {
         if (e.getKeyCode() == KeyEvent.VK_SPACE && game.getSwingBlock().isSwinging()) {
             game.getSwingBlock().setSwinging(false);
             game.getSwingBlock().setFalling(true);
-
         }
         if (e.getKeyCode() == KeyEvent.VK_ENTER) {
             game.setGameState("playing");
