@@ -285,8 +285,8 @@ public class Game extends Canvas implements Runnable {
         leftBackgroundY += blockHeight;
         leftloopBackground1PosY += blockHeight;
         leftloopBackground2PosY += blockHeight;
-        for (int i = 0; i < blockStack.size(); i++) {
-            leftBlockStack.get(i).setPosY(getY() + blockHeight);
+        for (int i = 0; i < leftBlockStack.size(); i++) {
+            leftBlockStack.get(i).setPosY(leftBlockStack.get(i).getPosY() + blockHeight);
         }
     }
 
@@ -296,7 +296,7 @@ public class Game extends Canvas implements Runnable {
         rightloopBackground1PosY += blockHeight;
         rightloopBackground2PosY += blockHeight;
         for (int i = 0; i < rightBlockStack.size(); i++) {
-            rightBlockStack.get(i).setPosY(getY() + blockHeight);
+            rightBlockStack.get(i).setPosY(rightBlockStack.get(i).getPosY() + blockHeight);
         }
     }
 
@@ -453,10 +453,6 @@ public class Game extends Canvas implements Runnable {
                             rightLives=p2lives;
                             rightScore=p2score;
                         }
-                    	
-                 
-
-
                 }
                 connectToServer.close();
             } catch (IOException ex) {
