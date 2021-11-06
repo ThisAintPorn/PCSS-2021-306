@@ -18,6 +18,7 @@ public class Player implements Runnable {
     boolean firstTimeId = true;
     boolean receiveBool = false;
     boolean putBlock = false;
+    boolean start = true;
 
     public Player(Socket s, String n, int id, Server serv) {
         this.clientSocket = s;
@@ -51,11 +52,11 @@ public class Player implements Runnable {
             	
             		//Receives other players info about corresponding scores and lives (and probably block positions?)
                 	//playerReceiver();
-            		boolean start = true;
+            		
             		if (start) {
             			dop.writeBoolean(true);
             			dop.writeBoolean(false);
-            			System.out.println("staaart");
+            			System.out.println("Player "+ playerId +" is: READY");
             			start = false;
             		}
             		
@@ -81,19 +82,37 @@ public class Player implements Runnable {
                 	}
                 	//Send block position
                 	if(playerId == 1 && server.getP2Send() == true) {
+            			dop.writeInt(2);
+            			dop.writeInt(server.getP2LastBlock());
+            			server.setP2Send(false);
             			
             		}else if (playerId == 1 && server.getP3Send() == true) {
+            			dop.writeInt(3);
+            			dop.writeInt(server.getP3LastBlock());
+            			server.setP3Send(false);
             			
             		}else if (playerId == 2 && server.getP1Send() == true) {
+            			dop.writeInt(1);
+            			dop.writeInt(server.getP1LastBlock());
+            			server.setP1Send(false);
             			
             		}else if (playerId == 2 && server.getP3Send() == true) {
+            			dop.writeInt(3);
+            			dop.writeInt(server.getP3LastBlock());
+            			server.setP3Send(false);
             			
             		}else if (playerId == 3 && server.getP1Send() == true) {
+            			dop.writeInt(1);
+            			dop.writeInt(server.getP1LastBlock());
+            			server.setP1Send(false);
             			
             		}else if (playerId == 3 && server.getP2Send() == true) {
+            			dop.writeInt(2);
+            			dop.writeInt(server.getP2LastBlock());
+            			server.setP2Send(false);
             			
             		}else {
-            			//dop.writeInt(0);
+            			dop.writeInt(0);
             		}
                 	
                 	//Selects player and sets the corresponding lives and score to the one in the object.

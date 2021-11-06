@@ -46,6 +46,7 @@ public class Game extends Canvas implements Runnable {
     private String ipAddress;
     private int port;
     private boolean sendBool, startGame;
+    boolean waitForStart = true;
 
     private KeyManager keyManager;
 
@@ -360,7 +361,7 @@ public class Game extends Canvas implements Runnable {
                         		//dip.readBoolean();
                     }
 
-                    boolean waitForStart = true;
+                    
                     if (waitForStart) {
                     	startGame = dip.readBoolean();
                     	System.out.println("Game started: " + startGame);
@@ -388,7 +389,29 @@ public class Game extends Canvas implements Runnable {
 
 
                         //Receive block position
-
+                        int blockSendId = 0;
+                        blockSendId = dip.readInt();
+                        if(playerId == 1 && blockSendId == 2) {
+                			leftLastBlockcenterX = dip.readInt();
+                			addToLeftBlockStack(leftLastBlockcenterX);
+                		}else if (playerId == 1 && blockSendId == 3) {
+                			rightLastBlockcenterX = dip.readInt();
+                			addToRightBlockStack(rightLastBlockcenterX);
+                		}else if (playerId == 2 && blockSendId == 1) {
+                			leftLastBlockcenterX = dip.readInt();
+                			addToLeftBlockStack(leftLastBlockcenterX);
+                		}else if (playerId == 2 && blockSendId == 3) {
+                			rightLastBlockcenterX = dip.readInt();
+                			addToRightBlockStack(rightLastBlockcenterX);
+                		}else if (playerId == 3 && blockSendId == 1) {
+                			leftLastBlockcenterX = dip.readInt();
+                			addToLeftBlockStack(leftLastBlockcenterX);
+                		}else if (playerId == 3 && blockSendId == 2) {
+                			rightLastBlockcenterX = dip.readInt();
+                			addToRightBlockStack(rightLastBlockcenterX);
+                		}else {
+                			
+                		}
 
                         //Receive other players' data from server
                         if (playerId == 1) {
