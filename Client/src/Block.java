@@ -47,6 +47,8 @@ public class Block {
                     game.moveUp();
                     if (posY < game.getBlockHeight()) {
                         game.setBackgroundPosY(game.getBackgroundPosY() + game.getBlockHeight());
+                        game.setLoopBackground1PosY(game.getLoopBackground1PosY() + game.getBlockHeight());
+                        game.setLoopBackground2PosY(game.getLoopBackground2PosY() + game.getBlockHeight());
                         game.setBottomBoundY(game.getBottomBoundY() + game.getBlockHeight());
                         for (int i = 0; i < game.getBlockStack().size(); i++) {
                             game.getBlockStack().get(i).setPosY(game.getBlockStack().get(i).getPosY() + game.getBlockHeight());

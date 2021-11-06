@@ -23,7 +23,7 @@ public class Game extends Canvas implements Runnable {
 
     private static BufferedImage background, blockImg, loopbackground;
     private static int backgroundPosY = -3240, leftBackgroundY = -3240, rightBackgroundY = -3240,
-            loopBackground1PosY = -3240 - backgroundHeight, loopBackground2PosY = -3240 - (2 * backgroundHeight);
+            loopBackground1PosY = -7560, loopBackground2PosY = -3240 - (2 * backgroundHeight);
 
 
     private boolean running;
@@ -445,6 +445,22 @@ public class Game extends Canvas implements Runnable {
 
     public void setBackgroundPosY(int y) {
         backgroundPosY = y;
+    }
+
+    public int getLoopBackground1PosY() {
+        return loopBackground1PosY;
+    }
+
+    public void setLoopBackground1PosY(int y) {
+        loopBackground1PosY = y;
+    }
+
+    public int getLoopBackground2PosY() {
+        return loopBackground2PosY;
+    }
+
+    public void setLoopBackground2PosY(int y) {
+        loopBackground2PosY = y;
     }
 
     public void setSendBool(boolean b) {
