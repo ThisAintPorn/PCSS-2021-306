@@ -392,8 +392,9 @@ public class Game extends Canvas implements Runnable {
                         } else {
                             dop.writeBoolean(false);
                         }
-
-
+                        
+                        dop.flush();
+                        
                         //Receive block position
                         int blockSendId = 0;
                         blockSendId = dip.readInt();
