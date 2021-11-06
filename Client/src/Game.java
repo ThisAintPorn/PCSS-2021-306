@@ -348,7 +348,7 @@ public class Game extends Canvas implements Runnable {
                         playerId = dip.readInt();
                         firstTimeId = dip.readBoolean();
                     }
-
+                    
                     //Send score to the server
                     dop.writeInt(score);
 
