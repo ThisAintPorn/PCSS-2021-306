@@ -355,6 +355,7 @@ public class Game extends Canvas implements Runnable {
                     //The first time the connection happens, the client receives the player ID
                     if (firstTimeId) {
                         playerId = dip.readInt();
+                        System.out.println("Player id is: " + playerId);
                         firstTimeId = dip.readBoolean();
                     }
 
