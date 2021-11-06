@@ -57,7 +57,7 @@ public class Game extends Canvas implements Runnable {
     public static void main(String[] args) {
         Game game = new Game();
 
-        /*
+
         //traffic
         Scanner input = new Scanner(System.in);
         System.out.println("Enter ip address for example 192.168.1.1");
@@ -67,7 +67,7 @@ public class Game extends Canvas implements Runnable {
         game.port = input.nextInt();
         System.out.println("The port is " + game.port);
         input.close();
-        */
+
 
         window = new Window(width, height, gameTitle, game);
 
@@ -117,6 +117,8 @@ public class Game extends Canvas implements Runnable {
         this.addKeyListener(keyManager);
         swingBlock = new Block(this);
         blockStack = new ArrayList<Block>();
+        leftBlockStack = new ArrayList<Block>();
+        rightBlockStack = new ArrayList<Block>();
         this.start();
         //window.toTop();
         gameState = "waitingForPlayers";
@@ -132,9 +134,16 @@ public class Game extends Canvas implements Runnable {
     }
 
     public void tick() {
-        swingBlock.swing();
-        swingBlock.fall();
-        moveUp();
+        switch (gameState) {
+            case "waitingForPlayers":
+                // waiting screen and game title
+                break;
+            case "playing":
+                swingBlock.swing();
+                swingBlock.fall();
+                moveUp();
+                break;
+        }
     }
 
     public void render() {
