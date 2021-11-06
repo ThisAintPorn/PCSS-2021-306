@@ -45,7 +45,7 @@ public class Game extends Canvas implements Runnable {
     private int p1score, p2score, p3score, p1lives, p2lives, p3lives;
     private String ipAddress;
     private int port;
-    private boolean sendBool;
+    private boolean sendBool, startGame;
 
     private KeyManager keyManager;
 
@@ -331,9 +331,18 @@ public class Game extends Canvas implements Runnable {
                 while (connect) {
 
                     //The first time the connection happens, the client receives the player ID
-                    if (firstTimeId == true) {
+                    if (firstTimeId) {
                         playerId = dip.readInt();
                         firstTimeId = dip.readBoolean();
+                    }
+                    boolean waitForStart = true;
+                    if (waitForStart) {
+                    	startGame = dip.readBoolean();
+                    	waitForStart = dip.readBoolean();
+                    }
+                    while(startGame) {
+                    	
+                    	
                     }
 
                     //Send score to the server
