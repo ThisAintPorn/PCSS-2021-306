@@ -59,7 +59,7 @@ public class Player implements Runnable {
             			System.out.println("Player "+ playerId +" is: READY");
             			start = false;
             		}
-            		
+            		dop.flush();
                 	//Receive score from the client
                 	score = dip.readInt();
          
@@ -152,6 +152,7 @@ public class Player implements Runnable {
                 		dop.writeInt(server.getP2Score());
                 		dop.writeInt(server.getP2Lives());
                 	}
+                	dop.flush();
             	
             }
         } catch (IOException e) {
