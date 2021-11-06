@@ -11,6 +11,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Game extends Canvas implements Runnable {
 
     private static final String gameTitle = "Tilted Towers";
@@ -28,7 +29,7 @@ public class Game extends Canvas implements Runnable {
             leftloopBackground1PosY = -7560, leftloopBackground2PosY = -3240 - (2 * backgroundHeight),
             rightloopBackground1PosY = -7560, rightloopBackground2PosY = -3240 - (2 * backgroundHeight);
 
-
+    private Clip ambient, lifeLost, blockStacked;
     private boolean running;
     private Thread thread;
     private BufferStrategy bs;
