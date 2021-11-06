@@ -12,7 +12,7 @@ public class Server {
     double rate, amount;
     int years,clients;
     static int p1score, p2score, p3score, p1lives, p2lives, p3lives, p1LastBlock, p2LastBlock, p3LastBlock; 
-    static boolean p1send, p2send, p3send, startGame = false;
+    static boolean p1send, p2send, p3send, startGame = true;
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
@@ -22,8 +22,10 @@ public class Server {
         	server.clientThread();
         }).start();
         
-        Scanner input = new Scanner(System.in);
+       
         
+       /* new Thread(() -> {
+        	 Scanner input = new Scanner(System.in);
         while (!startGame) {
               System.out.println("Type start to start the game");
               if (input.next().equals("start")) {
@@ -32,7 +34,7 @@ public class Server {
               }
         }
         input.close();
-      
+        }).start();*/
     }
     
     

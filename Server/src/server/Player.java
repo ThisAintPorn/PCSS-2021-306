@@ -44,16 +44,16 @@ public class Player implements Runnable {
             	//Sends the id of the player to the client the first time the connection happens
             	if (firstTimeId) {
             		dop.writeInt(playerId);
-            		dop.writeBoolean(false);
+            		//dop.writeBoolean(false);
             		firstTimeId = false;
             	}
             	
-            	while (server.getStartGame()) {
+            	
             		//Receives other players info about corresponding scores and lives (and probably block positions?)
                 	//playerReceiver();
             		boolean start = true;
             		while (start) {
-            			dop.writeBoolean(server.getStartGame());
+            			dop.writeBoolean(true);
             			dop.writeBoolean(false);
             			System.out.println("staaart");
             			start = false;
@@ -93,7 +93,7 @@ public class Player implements Runnable {
             		}else if (playerId == 3 && server.getP2Send() == true) {
             			
             		}else {
-            			dop.writeInt(0);
+            			//dop.writeInt(0);
             		}
                 	
                 	//Selects player and sets the corresponding lives and score to the one in the object.
@@ -133,7 +133,7 @@ public class Player implements Runnable {
                 		dop.writeInt(server.getP2Score());
                 		dop.writeInt(server.getP2Lives());
                 	}
-            	}
+            	
             }
         } catch (IOException e) {
             e.printStackTrace();

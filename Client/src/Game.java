@@ -356,15 +356,17 @@ public class Game extends Canvas implements Runnable {
                     if (firstTimeId) {
                         playerId = dip.readInt();
                         System.out.println("Player id is: " + playerId);
-                        firstTimeId = dip.readBoolean();
+                        firstTimeId = false;
+                        		//dip.readBoolean();
                     }
 
                     boolean waitForStart = true;
                     if (waitForStart) {
                     	startGame = dip.readBoolean();
+                    	System.out.println("Game started: " + startGame);
                     	waitForStart = dip.readBoolean();
                     }
-                    while(startGame) {
+                   
 
                          gameState = "playing";
 
@@ -406,7 +408,7 @@ public class Game extends Canvas implements Runnable {
                             p2lives = dip.readInt();
                         }
                     	
-                    }
+                    
 
 
                 }
