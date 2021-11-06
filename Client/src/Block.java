@@ -28,8 +28,6 @@ public class Block {
 
     public void fall() {
         if (falling) {
-            System.out.println("falling Speed: " + fallSpeed + "Acceleration: " + fallAcceleration);
-            System.out.println("posX: "+ game.getSwingBlock().getPosX() + ",posY: " + game.getSwingBlock().getPosY());
             posY += (int) fallSpeed;
             fallSpeed *= fallAcceleration;
             if (posX + (game.getBlockWidth() / 2) <= (game.getLastBlockCenterX() + game.getFallMargin()) &&
