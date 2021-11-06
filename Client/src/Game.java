@@ -45,7 +45,7 @@ public class Game extends Canvas implements Runnable {
     private int p1score, p2score, p3score, p1lives, p2lives, p3lives;
     private String ipAddress;
     private int port;
-    private boolean sendBool;
+    private boolean sendBool, startGame;
 
     private KeyManager keyManager;
 
@@ -344,48 +344,61 @@ public class Game extends Canvas implements Runnable {
                 while (connect) {
 
                     //The first time the connection happens, the client receives the player ID
-                    if (firstTimeId == true) {
+                    if (firstTimeId) {
                         playerId = dip.readInt();
                         firstTimeId = dip.readBoolean();
                     }
-                    
-                    //Send score to the server
-                    dop.writeInt(score);
 
-                    //Send lives to the server
-                    dop.writeInt(playerLives);
+                    boolean waitForStart = true;
+                    if (waitForStart) {
+                    	startGame = dip.readBoolean();
+                        gameState = "playing";
+                    	waitForStart = dip.readBoolean();
+                    }
+                    while(startGame) {
+
+                         gameState = "playing";
+
+                        //Send score to the server
+                        dop.writeInt(score);
+
+                        //Send lives to the server
+                        dop.writeInt(playerLives);
 
 
-                    //Send block position
-                    if (sendBool) {
-                        dop.writeBoolean(true);
-                        dop.writeInt(lastBlockCenterX);
-                        sendBool = false;
-                    } else {
-                        dop.writeBoolean(false);
+                        //Send block position
+                        if (sendBool) {
+                            dop.writeBoolean(true);
+                            dop.writeInt(lastBlockCenterX);
+                            sendBool = false;
+                        } else {
+                            dop.writeBoolean(false);
+                        }
+
+
+                        //Receive block position
+
+
+                        //Receive other players' data from server
+                        if (playerId == 1) {
+                            p2score = dip.readInt();
+                            p2lives = dip.readInt();
+                            p3score = dip.readInt();
+                            p3lives = dip.readInt();
+                        } else if (playerId == 2) {
+                            p1score = dip.readInt();
+                            p1lives = dip.readInt();
+                            p3score = dip.readInt();
+                            p3lives = dip.readInt();
+                        } else if (playerId == 3) {
+                            p1score = dip.readInt();
+                            p1lives = dip.readInt();
+                            p2score = dip.readInt();
+                            p2lives = dip.readInt();
+                        }
+                    	
                     }
 
-
-                    //Receive block position
-
-
-                    //Receive other players' data from server
-                    if (playerId == 1) {
-                        p2score = dip.readInt();
-                        p2lives = dip.readInt();
-                        p3score = dip.readInt();
-                        p3lives = dip.readInt();
-                    } else if (playerId == 2) {
-                        p1score = dip.readInt();
-                        p1lives = dip.readInt();
-                        p3score = dip.readInt();
-                        p3lives = dip.readInt();
-                    } else if (playerId == 3) {
-                        p1score = dip.readInt();
-                        p1lives = dip.readInt();
-                        p2score = dip.readInt();
-                        p2lives = dip.readInt();
-                    }
 
                 }
                 connectToServer.close();
