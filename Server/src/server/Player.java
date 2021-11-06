@@ -55,6 +55,7 @@ public class Player implements Runnable {
             		while (start) {
             			dop.writeBoolean(server.getStartGame());
             			dop.writeBoolean(false);
+            			System.out.println("staaart");
             			start = false;
             		}
             		
