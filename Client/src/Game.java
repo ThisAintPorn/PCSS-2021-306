@@ -248,7 +248,7 @@ public class Game extends Canvas implements Runnable {
                     g.fillRect(0, 0, 640, height);
                     g.setColor(Color.white);
                     g.drawString("YOU LOST", 0 + blockWidth, (height / 2));
-                    g.drawString("      Your final score was: " + p2score, 0 + fallMargin, (height / 2) + 30);
+                    g.drawString("      Your final score was: " + leftScore, 0 + fallMargin, (height / 2) + 30);
                 }
                 //drawing right players scores and lives
                 if (rightLives > 0) {
@@ -259,7 +259,7 @@ public class Game extends Canvas implements Runnable {
                     g.fillRect(1280, 0, 640, height);
                     g.setColor(Color.white);
                     g.drawString("YOU LOST", 1280 + blockWidth, (height / 2));
-                    g.drawString("      Your final score was: " + p3score, 1280 + fallMargin, (height / 2) + 30);
+                    g.drawString("      Your final score was: " + rightScore, 1280 + fallMargin, (height / 2) + 30);
                 }
                 break;
 
