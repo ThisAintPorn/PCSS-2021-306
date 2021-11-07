@@ -18,7 +18,7 @@ public class Player implements Runnable {
     boolean firstTimeId = true;
     boolean receiveBool = false;
     boolean putBlock = false;
-    boolean start = true;
+    boolean waitForStart = true;
 
     public Player(Socket s, String n, int id, Server serv) {
         this.clientSocket = s;
@@ -53,12 +53,20 @@ public class Player implements Runnable {
             		//Receives other players info about corresponding scores and lives (and probably block positions?)
                 	//playerReceiver();
             		
-            		if (start) {
-            			dop.writeBoolean(true);
-            			dop.writeBoolean(false);
+            		if (waitForStart) {
+            			
+            			
             			System.out.println("Player "+ playerId +" is: READY");
-            			start = false;
+            			if (server.getClients() == 3) {
+            				waitForStart = false;
+            				dop.writeBoolean(true);
+            				dop.writeBoolean(false);
+            			} else {
+            				dop.writeBoolean(false);
+            				dop.writeBoolean(true);
+            			}
             		}
+            		
             		dop.flush();
                 	//Receive score from the client
                 	score = dip.readInt();
