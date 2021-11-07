@@ -1,4 +1,3 @@
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -59,7 +58,7 @@ public class Game extends Canvas implements Runnable {
         Game game = new Game();
 
 
-        //traffic
+        // Connecting
         Scanner input = new Scanner(System.in);
         System.out.println("Enter ip address for example 192.168.1.1");
         game.ipAddress = input.next();
@@ -73,7 +72,7 @@ public class Game extends Canvas implements Runnable {
         window = new Window(width, height, gameTitle, game);
 
 
-        game.initialize();
+        game.initialize();//initializes game data and assets
         game.traffic(); //creates new thread for traffic
 
 
@@ -168,7 +167,7 @@ public class Game extends Canvas implements Runnable {
 
                 break;
             case "playing":
-                //Initial backround for left opponent
+                //Initial background for left opponent
                 g.drawImage(background, 0, leftBackgroundY, null);
                 //background for center player
                 g.drawImage(background, 640, backgroundPosY, null);
@@ -313,31 +312,11 @@ public class Game extends Canvas implements Runnable {
         setSendBool(true);
         score++;
         System.out.println("Point!, score is: " + score);
-        /*
-        try {
-            dop.writeInt(lastBlockCenterX);
-            dop.flush();
-        } catch (IOException ex) {
-            System.out.println(ex.toString() + '\n');
-        }
-
-         */
     }
 
     public void missMarker() {
         playerLives--;
         System.out.println("Miss");
-
-        //lose life
-        /*
-        try {
-            dop.writeInt(lastBlockCenterX);
-            dop.flush();
-        } catch (IOException ex) {
-            System.out.println(ex.toString() + '\n');
-        }
-
-         */
     }
 
     public void traffic() {
