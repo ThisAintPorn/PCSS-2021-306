@@ -185,24 +185,4 @@ public class Player implements Runnable {
     		server.setP3LastBlock(lastBlockPos);
     	}
     }
-    /*
-    public void playerReceiver() {
-    	if(playerId == 1) {
-    		p2score = server.getP2Score();
-    		p2lives = server.getP2Lives();
-    		p3score = server.getP3Score();
-    		p3lives = server.getP3Lives();
-    	}else if(playerId==2) {
-    		p1score = server.getP1Score();
-    		p1lives = server.getP1Lives();
-    		p3score = server.getP3Score();
-    		p3lives = server.getP3Lives();
-    	}else if(playerId==3) {
-    		p2score = server.getP2Score();
-    		p2lives = server.getP2Lives();
-    		p1score = server.getP1Score();
-    		p1lives = server.getP1Lives();
-    	}
-    }
-    */
 }
