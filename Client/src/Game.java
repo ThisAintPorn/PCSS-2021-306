@@ -26,9 +26,9 @@ public class Game extends Canvas implements Runnable {
 
     //initial positions for backgrounds
     private static int backgroundPosY = -3240, leftBackgroundY = -3240, rightBackgroundY = -3240,
-            loopBackground1PosY = -7560, loopBackground2PosY = -3240 - (2 * backgroundHeight),
-            leftloopBackground1PosY = -7560, leftloopBackground2PosY = -3240 - (2 * backgroundHeight),
-            rightloopBackground1PosY = -7560, rightloopBackground2PosY = -3240 - (2 * backgroundHeight);
+            loopBackground1PosY = -7560, loopBackground2PosY = -1180,
+            leftloopBackground1PosY = -7560, leftloopBackground2PosY = -1180,
+            rightloopBackground1PosY = -7560, rightloopBackground2PosY = -1180;
 
     private boolean running;
     private Thread thread;
