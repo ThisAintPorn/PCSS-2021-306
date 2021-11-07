@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class Server {
 	static int port = 2345;
     double rate, amount;
-    int years,clients;
+    int years,clients = 0;
     static int p1score, p2score, p3score, p1lives, p2lives, p3lives, p1LastBlock, p2LastBlock, p3LastBlock; 
     static boolean p1send, p2send, p3send, startGame = true;
 
@@ -45,7 +45,7 @@ public class Server {
             ServerSocket server = new ServerSocket(port);
             System.out.println("Server started at: " + new Date());
 
-            int clients = 0;
+            
 
             while (true) {
 
@@ -173,5 +173,10 @@ public class Server {
     
     public boolean getStartGame() {
     	return startGame;
+    }
+    
+    
+    public int getClients() {
+    	return clients;
     }
 }
