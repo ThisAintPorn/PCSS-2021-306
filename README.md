@@ -1,8 +1,10 @@
 # Introduction
+Tilted Towers is a competitive game for 3 players about building towers by stacking blocks. Each player must have the client software running in their own device, while one player must also be running the server. Since this Repo contains both the Client and the Server, these must be run as separate projects in your IDE of choice.
+
 Tilted Towers has a Server that consists of different classes which contains functions using both networking and multithreading. This is done on a basic level in order to make a functioning game. The game will be running using a server which will be able to be joined by clients. When three clients have typed ip address and port, the game will then start.
 
 # How to install
-1. Every player must download or clone the repository to your computer's desktop as a zip file, and unzip it to a folder by the same name.
+1.
 2.
 3.
 # How to run the Server
