@@ -225,9 +225,10 @@ public class Game extends Canvas implements Runnable {
 
                 //Drawing swinging block
                 g.drawImage(blockImg, swingBlock.getPosX(), swingBlock.getPosY(), null);
-                g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+
 
                 //Drawing center players scores and lives
+                g.setFont(new Font("TimesRoman", Font.PLAIN, 30));
                 if (playerLives > 0) {
                     g.drawString("Lives: " + Integer.toString(playerLives), 1175, 25);
                     g.drawString("Score: " + Integer.toString(score), 640, 25);
