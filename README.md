@@ -21,3 +21,9 @@ Each player will start with three lives and when all three lives are lost the pl
 Good luck...  
 
 # UML diagrams
+## Use case diagram
+![use_case_pcss](https://user-images.githubusercontent.com/33686482/140653342-3a60bb05-c502-4e2a-9c95-ba094bf96384.PNG)
+
+## Sequence diagram
+![sequence](https://user-images.githubusercontent.com/33686482/140653385-9cf2397b-100d-4be2-999c-8b12a8e5b564.png)
+
