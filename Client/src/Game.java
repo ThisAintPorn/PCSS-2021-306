@@ -40,9 +40,9 @@ public class Game extends Canvas implements Runnable {
     private static int lastBlockCenterX = 960, leftLastBlockcenterX, rightLastBlockcenterX;
     private static Window window;
 
-    boolean connect = true;
-    boolean firstTimeId = true;
-    int playerId = 0;
+    private boolean connect = true;
+    private boolean firstTimeId = true;
+    private int playerId = 0;
     private int p1score, p2score, p3score, p1lives, p2lives, p3lives, leftScore, rightScore, leftLives, rightLives;
     private String ipAddress;
     private int port;
