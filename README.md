@@ -1,19 +1,23 @@
 # Introduction
+Tilted Towers is a competitive game for 3 players about building towers by stacking blocks. Each player must have the client software running in their own device, while one player must also be running the server. Since this Repo contains both the Client and the Server, these must be run as separate projects in your IDE of choice.
+
 Tilted Towers has a Server that consists of different classes which contains functions using both networking and multithreading. This is done on a basic level in order to make a functioning game. The game will be running using a server which will be able to be joined by clients. When three clients have typed ip address and port, the game will then start.
 
-# How to install
-1.
-2.
-3.
-# How to run the Server
-1.
-2.
-3.
+# How to install and run the Server
+1. Every player must download or clone the repository locally on your computer as a zip file, and unzip it to a folder by the same name.
+2. Each player then opens the Client folder as a project in IntelliJ or Eclipse. The host needs to open the Server folder as a project as well separately from the Client folder.
+3. The host should then run the Server before the players run the Client.
+4. The players are connected to the server after they run the Client where they are required to provide the IP address of the Server host followed by the specific port of the Server (in this case "2345").
+5. When all three players are connected to the Server the game will then start.
+
+
 # Gameplay instructions
-The goal of Tilted Towers is to get the most points which is achieved bybuilding the highest tower. It is played by three people at a time, and each user will be able to spectate the others but will only be able to interact with the middle part of the screen. 
+The goal of Tilted Towers is to get the most points which is achieved by building the highest tower. It is played by three people at a time, and each user will be able to spectate the others but will only be able to interact with the middle part of the screen. 
 
-The players will each start with one pre-built towerpiece where they need to place the next towerpiece. A towerpiece will be swinging on the screen, which will fall down when the user presses “space”. The towerpiece has to be dropped so it is on top of the tower, it does not have to be dropped perfectly on top of each other but the further away from the middle the bigger is the chance it will fall down. Everytime a towerpiece is placed correctly the player will gain a point.
+The players will each start with one pre-built towerpiece where they need to place the next towerpiece. A towerpiece will be swinging on the screen, which will fall down when the user presses “space”. The towerpiece has to be dropped so it lands on top of the tower, if a towerpiece is more than half of the width of a block off the center of the last block it will fall down and the player will lose a life. Everytime a towerpiece is placed correctly the player will score a point.
 
-Each player will have three lives and will lose one, whenever their own towerpiece is placed too far away from the middle of the tower. A player will lose when all three lives are lost.
+Each player will start with three lives and when all three lives are lost the player loses.
+
+Good luck...  
 
 # UML diagrams
