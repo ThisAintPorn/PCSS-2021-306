@@ -15,7 +15,7 @@ public class Game extends Canvas implements Runnable {
 
     private static final String gameTitle = "Tilted Towers";
     private static final int width = 1920, height = 1080, blockWidth = 213, blockHeight = 219, fallMargin = 107,
-            backgroundHeight = 4320, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
+            backgroundHeight = 4320,laneWidth=640, leftOpponentBound = 640, rightOpponentBound = 1067; //1280-213
     private static int playerLives = 3, score = 0, bottomBoundY = 512, enemyBottomBounds = 512;
     private static ArrayList<Block> blockStack, leftBlockStack, rightBlockStack;
     private static Block swingBlock;
@@ -23,10 +23,11 @@ public class Game extends Canvas implements Runnable {
 
 
     private static BufferedImage background, blockImg, loopbackground, waitingScreen;
-    private static int backgroundPosY = -3240, leftBackgroundY = -3240, rightBackgroundY = -3240,
-            loopBackground1PosY = -7560, loopBackground2PosY = -3240 - (2 * backgroundHeight),
-            leftloopBackground1PosY = -7560, leftloopBackground2PosY = -3240 - (2 * backgroundHeight),
-            rightloopBackground1PosY = -7560, rightloopBackground2PosY = -3240 - (2 * backgroundHeight);
+
+    //initial positions for backgrounds
+    private static int backgroundPosY = -3240, loopBackground1PosY = -7560, loopBackground2PosY = -1180,
+            leftBackgroundY = -3240,leftloopBackground1PosY = -7560, leftloopBackground2PosY = -1180,
+            rightBackgroundY = -3240,rightloopBackground1PosY = -7560, rightloopBackground2PosY = -1180;
 
     private boolean running;
     private Thread thread;
@@ -34,7 +35,7 @@ public class Game extends Canvas implements Runnable {
     private Graphics g;
     private static long lastFPSCheck = 0;
     private static long msPerFrame = 16;
-    private static int centerPosX = 960;
+    private static int centerPosX = 960; //not used right now...
     private static int lastBlockCenterX = 960, leftLastBlockcenterX, rightLastBlockcenterX;
     private static Window window;
 
@@ -91,14 +92,15 @@ public class Game extends Canvas implements Runnable {
             } catch (InterruptedException e) {
                 System.out.println(e);
             }
-
+            /*
             //FPS counter
             if (System.nanoTime() > lastFPSCheck + 1000000000) {
                 lastFPSCheck = System.nanoTime();
                 long currentFPS = frames;
                 frames = 0;
-                //System.out.println("FPS: " + currentFPS);
+                System.out.println("FPS: " + currentFPS);
             }
+            */
         }
         stop();
     }
@@ -167,12 +169,12 @@ public class Game extends Canvas implements Runnable {
 
                 break;
             case "playing":
-                //Initial background for left opponent
-                g.drawImage(background, 0, leftBackgroundY, null);
                 //background for center player
-                g.drawImage(background, 640, backgroundPosY, null);
+                g.drawImage(background, laneWidth, backgroundPosY, null);
+                //background for left opponent
+                g.drawImage(background, 0, leftBackgroundY, null);
                 //background for right opponent
-                g.drawImage(background, 1280, rightBackgroundY, null);
+                g.drawImage(background, 2*laneWidth, rightBackgroundY, null);
 
                 //looping backgrounds for center player
                 g.drawImage(loopbackground, 640, loopBackground1PosY, null);
@@ -275,8 +277,6 @@ public class Game extends Canvas implements Runnable {
         for (int i = 0; i < blockStack.size(); i++) {
             blockStack.get(i).moveOneUp();
         }
-
-
     }
 
     //moves up left players blocks and backgrounds 1 block at a time
