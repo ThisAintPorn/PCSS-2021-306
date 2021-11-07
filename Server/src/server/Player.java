@@ -7,18 +7,18 @@ import java.net.Socket;
 import java.util.Date;
 
 public class Player implements Runnable {
-    Socket clientSocket;
-    String serverName;
-    int playerId;
-    int score;
-    int playerLives;
-    int lastBlockPos;
-    Server server;
+    private Socket clientSocket;
+    private String serverName;
+	private int playerId;
+	private int score;
+	private int playerLives;
+	private int lastBlockPos;
+	private Server server;
     //int p1score, p2score, p3score, p1lives, p2lives, p3lives;
-    boolean firstTimeId = true;
-    boolean receiveBool = false;
-    boolean putBlock = false;
-    boolean waitForStart = true;
+	private boolean firstTimeId = true;
+	private boolean receiveBool = false;
+	private boolean putBlock = false;
+	private boolean waitForStart = true;
 
     public Player(Socket s, String n, int id, Server serv) {
         this.clientSocket = s;

@@ -8,11 +8,11 @@ import java.util.Date;
 import java.util.Scanner;
 
 public class Server {
-	static int port = 2345;
-    double rate, amount;
-    int years,clients = 0;
-    static int p1score, p2score, p3score, p1lives, p2lives, p3lives, p1LastBlock, p2LastBlock, p3LastBlock; 
-    static boolean p1send, p2send, p3send, startGame = true;
+    private static int port = 2345;
+    private double rate, amount;
+    private  int years,clients = 0;
+    private static int p1score, p2score, p3score, p1lives, p2lives, p3lives, p1LastBlock, p2LastBlock, p3LastBlock;
+    private static boolean p1send, p2send, p3send, startGame = true;
 
     public static void main(String[] args) {
         // TODO Auto-generated method stub
