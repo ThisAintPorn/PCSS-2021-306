@@ -348,6 +348,7 @@ public class Game extends Canvas implements Runnable {
 
                     if (startGame) {
                     	gameState = "playing";
+                    	waitForStart = false;
                     }
 
                     //Send score to the server

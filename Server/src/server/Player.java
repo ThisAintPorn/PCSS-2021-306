@@ -54,13 +54,11 @@ public class Player implements Runnable {
                 	//playerReceiver();
             		
             		if (waitForStart) {
-            			
-            			
             			System.out.println("Player "+ playerId +" is: READY");
             			if (server.getClients() == 3) {
-            				waitForStart = false;
             				dop.writeBoolean(true);
             				dop.writeBoolean(false);
+            				waitForStart = false;
             			} else {
             				dop.writeBoolean(false);
             				dop.writeBoolean(true);
