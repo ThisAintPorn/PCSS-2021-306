@@ -28,4 +28,4 @@ Good luck...
 ![sequence](https://user-images.githubusercontent.com/33686482/140653550-f440114d-7bad-406f-af2d-15258c2ccac7.png)
 
 ## Class diagram
-
+![Final_Class_Diagram](https://user-images.githubusercontent.com/33686482/140654406-4255da17-6b39-4290-927d-efcfbe1e8e79.png)
