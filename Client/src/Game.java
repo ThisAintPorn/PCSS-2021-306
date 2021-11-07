@@ -343,7 +343,9 @@ public class Game extends Canvas implements Runnable {
 
                     if (waitForStart) {
                         startGame = dip.readBoolean();
-                        System.out.println("Game started: " + startGame);
+                        if(startGame) {
+                        	System.out.println("Game started: " + startGame);
+                        }
                         waitForStart = dip.readBoolean();
                     }
 
