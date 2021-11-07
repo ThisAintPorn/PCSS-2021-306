@@ -7,10 +7,14 @@ Tilted Towers has a Server that consists of different classes which contains fun
 1. Every player must download or clone the repository to your computer's desktop as a zip file, and unzip it to a folder by the same name.
 2. Each player then opens the Client folder in IntelliJ or Eclipse. The hosting player needs to open the Server folder as well separately from the Client folder.
 3.
+
+
 # How to run the Server
 1.
 2.
 3.
+
+
 # Gameplay instructions
 The goal of Tilted Towers is to get the most points which is achieved bybuilding the highest tower. It is played by three people at a time, and each user will be able to spectate the others but will only be able to interact with the middle part of the screen. 
 
