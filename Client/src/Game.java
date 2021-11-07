@@ -446,7 +446,7 @@ public class Game extends Canvas implements Runnable {
 
     public void addToRightBlockStack(int x) {
         //x should be rightLastBlockcenterX
-        leftBlockStack.add(new Block(this, x + 640 - 107));
+        leftBlockStack.add(new Block(this, x + 1280 - 107));
     }
 
     //getters and setters below
