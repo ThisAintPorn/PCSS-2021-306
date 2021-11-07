@@ -6,8 +6,9 @@ Tilted Towers has a Server that consists of different classes which contains fun
 # How to install and run the Server
 1. Every player must download or clone the repository locally on your computer as a zip file, and unzip it to a folder by the same name.
 2. Each player then opens and the Client folder as a project in IntelliJ or Eclipse. The host needs to open the Server folder as a project as well separately from the Client folder.
-3. The host should then run the Server first before the players run the Client.
-4. The players are connected to the server after they run the Client where they are required to provide the same IP address of the Server host, followed by the specific port of the Server (in this case "2345").
+3. All three players must share the same local network connection inorder to play together.
+4. The host should then run the Server first before the players run the Client.
+5. The players are connected to the server after they run the Client where they are required to provide the same IP address of the Server host, followed by the specific port of the Server (in this case "2345").
 6. When all three players are connected to the Server and have joined with the same IP address and port number, the game will then start automatically.
 
 
@@ -16,9 +17,9 @@ The goal of Tilted Towers is to get the most points which is achieved by buildin
 
 **_Note: The game will not start if only one or two players join and try to play._**
 
-The players will each start with one pre-built towerpiece where they need to place the next towerpiece. A towerpiece will be swinging on the screen, which will fall down when the user presses “space”. The towerpiece has to be dropped so it lands on top of the tower, if a towerpiece is more than half of the width of a towerpiece off the center of the last towerpiece it will fall down and the player will lose a life. Everytime a towerpiece is placed correctly the player will score a point.
+The players will each start with one pre-built towerpiece where they need to place the next towerpiece. A towerpiece will be swinging on the screen, which will fall down when the user presses “space”. The towerpiece has to be dropped so it lands on top of the tower, if a towerpiece is more than half of the width of a towerpiece off the center of the last towerpiece it will fall down and the player will lose a life. Everytime a towerpiece is placed correctly the player will score a point and the swinging towerpiece will start to swing faster gradually.
 
-Each player will start with three lives and when all three lives are lost the game ends. The player with the most points after losing all lives wins.
+Each player will start with three lives and when all three lives are lost the game ends. The player with the most points after losing all their lives wins.
 
 Good luck and have fun!  
 
