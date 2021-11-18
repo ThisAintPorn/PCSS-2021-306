@@ -31,4 +31,4 @@ Good luck and have fun!
 ![sequence](https://user-images.githubusercontent.com/33686482/140653550-f440114d-7bad-406f-af2d-15258c2ccac7.png)
 
 ## Class diagram
-
+![Final_Class_Diagram](https://user-images.githubusercontent.com/33686482/142420031-c8278b17-56e8-4648-84a8-e6a0c502d9ad.png)
